@@ -1218,7 +1218,7 @@
                                     class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
                                         class="ft-list"></i> <?php echo $this->lang->line('Pet') ?></a>
                             <ul class="dropdown-menu">
-                                <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>pets/list"
+                                <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>pets/index"
                                                     data-toggle="dropdown"> <?php echo $this->lang->line('List'); ?></a>
                                 </li>
                                 <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>products/add"
