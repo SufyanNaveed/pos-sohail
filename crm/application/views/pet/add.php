@@ -1,9 +1,12 @@
-<div class="card card-block">
-    <div id="notify" class="alert alert-success" style="display:none;">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-
-        <div class="message"></div>
-    </div>
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            
+            <div class="card card-block">
+                <div class="box-header with-border">
+                <h3 class="box-title">Pets</h3>
     <div class="card card-block">
         <?php
         $attributes = array('class' => 'card-body', 'id' => 'data_form');
@@ -106,5 +109,10 @@
 
 
         </form>
+        </div>
+            </div>
+        </div>
+
     </div>
+</div>
 </div>

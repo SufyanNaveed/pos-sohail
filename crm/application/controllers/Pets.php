@@ -71,8 +71,7 @@ class Pets extends CI_Controller{
         }
         $this->load->view('includes/header');
         $this->load->view('pet/edit',$data);
-        $this->load->view('includes/footer');
-        $this->load->view('pet/edit',$data);
+        $this->load->view('includes/footer');   
     }
     public function update()
     {
