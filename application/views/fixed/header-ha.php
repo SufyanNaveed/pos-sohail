@@ -1102,7 +1102,7 @@
             <?php }
             if ($this->aauth->premission(9)) {
                 ?>
-                <!-- <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
+                <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
                                                                       data-toggle="dropdown"><i
                                 class="ft-file-text"></i><span><?php echo $this->lang->line('HRM') ?></span></a>
                     <ul class="dropdown-menu">
@@ -1141,7 +1141,7 @@
                         </li>
 
                     </ul>
-                </li> -->
+                </li>
             <?php }
             if ($this->aauth->get_user()->roleid > 4) {
                 ?>
@@ -1214,29 +1214,10 @@
                                                                       data-toggle="dropdown"><i
                                 class="ft-layers"></i><span><?php echo $this->lang->line('Manage') ?></span></a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
-                                    class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
-                                        class="ft-list"></i> <?php echo $this->lang->line('Pet') ?></a>
-                            <ul class="dropdown-menu">
-                                <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>pets/index"
-                                                    data-toggle="dropdown"> <?php echo $this->lang->line('List'); ?></a>
-                                </li>
-                                <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>products/add"
-                                                    data-toggle="dropdown"> <?php echo $this->lang->line('Type'); ?></a>
-                                </li>
-                                <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>products/add"
-                                                    data-toggle="dropdown"> <?php echo $this->lang->line('Breed'); ?></a>
-                                </li>
-                                <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>products/add"
-                                                    data-toggle="dropdown"> <?php echo $this->lang->line('Mark Difference'); ?></a>
-                                </li>
-                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>products"
-                                                    data-toggle="dropdown"><?= $this->lang->line('Color'); ?></a>
-                                </li>
-
-
-                            </ul>
-                        </li>
+                    <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>pets/index"
+                                data-toggle="dropdown"> <?php echo $this->lang->line('Pet'); ?></a>
+                            </li>
+                        
                     </ul>
                 </li>
 

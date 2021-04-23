@@ -51,7 +51,7 @@
                         echo "<tr>
                     <td>$i</td>
                     <td>$row->pet_name</td>
-                    <td>$row->pet_photo</td>
+                    <td><img class='round' src='".base_url()."userfiles/pet/". $row->pet_photo."' style='max-height: 100%;max-width: 100%'></td>
                     <td>$row->color</td>
                     <td>$row->microchip_number</td>
                     <td>$row->date_of_birth</td>
@@ -59,18 +59,16 @@
                     <td>$row->pet_breed</td>
                     <td>$row->pet_type</td>
                     <td>$row->status</td>
-                    <td></td>
-                    
                     <td>
                     <a href='" . base_url("pets/edit?id=$pid") . 
-                    "' class='btn btn-warning btn-xs'><i class='fa fa-pencil'></i> " . $this->lang->line('Edit') . "</a>
-                   
+                    "' class='btn btn-warning btn-sm'><i class='fa fa-pencil'></i> " . $this->lang->line('Edit') . "</a>
+                    <a href='#' data-object-id='" . $pid . "' class='btn btn-danger btn-sm delete-object' title='Delete'>
+                    <i class='fa fa-trash'></i></a>             
                     </td></tr>";
                         $i++;
                     }
                     ?>
-                     <!-- <a href='#' data-object-id='" . $pid . "' class='btn btn-danger btn-xs delete-object' title='Delete'>
-                    <i class='fa fa-trash'></i></a> -->
+                     <!--  -->
                     </tbody>
                     <tfoot>
                     <tr>
@@ -100,62 +98,21 @@
         });
     </script>
 
-    <div id="pop_model" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-
-                    <h4 class="modal-title"><?php echo $this->lang->line('Discount'); ?></h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-
-                <div class="modal-body">
-                    <form id="form_model">
-                        <p>
-                            <?php echo $this->lang->line('you can pre-define the discount') ?>
-                        </p>
-                        <input type="hidden" id="dobject-id" name="gid" value="">
-
-
-                        <div class="row">
-                            <div class="col mb-1"><label
-                                        for="pmethod"><?php echo $this->lang->line('Discount') ?></label>
-                                <input name="disc_rate" class="form-control mb-1" type="number"
-                                       placeholder="Discount Rate in %">
-
-
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal"><?php echo $this->lang->line('Close'); ?></button>
-                            <input type="hidden" id="action-url" value="clientgroup/discount_update">
-                            <button type="button" class="btn btn-primary"
-                                    id="submit_model"><?php echo $this->lang->line('Change Status'); ?></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="delete_model" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
 
-                    <h4 class="modal-title"><?php echo $this->lang->line('Delete Customer Group') ?></h4>
+                    <h4 class="modal-title">Delete this pet?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <p><?php echo $this->lang->line('delete this customer group') ?></p>
+                    <p>Delete this pet?</p>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="object-id" value="">
-                    <input type="hidden" id="action-url" value="clientgroup/delete_i">
+                <input type="hidden" id="object-id_3" value="" name="pet_id">
+                    <input type="hidden" id="action-url" value="pets/delete">
                     <button type="button" data-dismiss="modal" class="btn btn-primary"
                             id="delete-confirm"><?php echo $this->lang->line('Delete') ?></button>
                     <button type="button" data-dismiss="modal"
@@ -170,5 +127,13 @@
             $('#dobject-id').val($(this).attr('data-object-id'));
             $(this).closest('tr').attr('id', $(this).attr('data-object-id'));
             $('#pop_model').modal({backdrop: 'static', keyboard: false});
+        });
+
+        $(document).on('click', ".delete-object", function (e) {
+            e.preventDefault();
+            var pet_id=$(this).attr('data-object-id')
+            console.log(pet_id);
+            $('#action-url').val('pets/delete?pet_id='+pet_id);
+            $(this).closest('tr').attr('id', $(this).attr('data-object-id'));
         });
     </script>

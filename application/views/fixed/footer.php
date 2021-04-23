@@ -13,7 +13,7 @@
     $('#sdate').datepicker('setDate', '<?php echo dateformat(date('Y-m-d', strtotime('-30 days', strtotime(date('Y-m-d'))))); ?>');
     $('.date30').datepicker({autoHide: true, format: '<?php echo $this->config->item('dformat2'); ?>'});
     $('.date30').datepicker('setDate', '<?php echo dateformat(date('Y-m-d', strtotime('-30 days', strtotime(date('Y-m-d'))))); ?>');
-
+    $('#petdob').datepicker({autoHide: true, format: '<?php echo $this->config->item('dformat2'); ?>'});
 
 </script>
 <script src="<?= assets_url() ?>app-assets/vendors/js/extensions/unslider-min.js"></script>

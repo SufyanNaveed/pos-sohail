@@ -41,8 +41,10 @@ class Pets extends CI_Controller{
         $pet_type = $this->input->post('pet_type');
         $microchip_number = $this->input->post('microchip_number');
         $mark_difference = $this->input->post('mark_difference');
+        $date_of_birth = $this->input->post('date_of_birth');
+        $pet_photo = $this->input->post('pet_photo');
 
-        $this->pets->addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference);
+        $this->pets->addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo);
     }
 
     public function edit()
@@ -66,8 +68,33 @@ class Pets extends CI_Controller{
         $pet_type = $this->input->post('pet_type');
         $microchip_number = $this->input->post('microchip_number');
         $mark_difference = $this->input->post('mark_difference');
+        $date_of_birth = $this->input->post('date_of_birth');
+        $pet_photo = $this->input->post('pet_photo');
 
-        $this->pets->edit($pet_id,$pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference);
+        $this->pets->edit($pet_id,$pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo);
+    }
+
+
+    public function file_handling()
+    {
+        if ($this->input->get('op')) {
+            $name = $this->input->get('name');
+            if ($this->products->meta_delete($name)) {
+                echo json_encode(array('status' => 'Success'));
+            }
+        } else {
+            $id = $this->input->get('id');
+            $this->load->library("Uploadhandler_generic", array(
+                'accept_file_types' => '/\.(gif|jpe?g|png)$/i', 'upload_dir' => FCPATH . 'userfiles/pet/', 'upload_url' => base_url() . 'userfile/pet/'
+            ));
+        }
+    }
+
+    public function delete()
+    {
+        
+        $pet_id=$this->input->get('pet_id');
+        $this->pets->delete($pet_id);
     }
 
 }

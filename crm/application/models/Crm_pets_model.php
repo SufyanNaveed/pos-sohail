@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pos_pets_model extends CI_Model
+class Crm_pets_model extends CI_Model
 {
 
     public function getPets()
@@ -55,9 +55,13 @@ class Pos_pets_model extends CI_Model
             
         );
 
-
-
         if ($this->db->insert('pos_pets', $data)) {
+            
+            $pet_id=$this->db->insert_id();
+            $data=$this->session->userdata();
+            $customerId=$data['user_details'][0]->user_id;
+            $this->db->insert('pos_customer_pets', ['customer_id'=>$customerId,"pet_id"=>$pet_id]);
+
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('ADDED'). "  <a href='".base_url('pets/index')."' class='btn btn-blue btn-lg'><span class='fa fa-list-alt' aria-hidden='true'></span>  </a> <a href='add' class='btn btn-info btn-lg'><span class='fa fa-plus-circle' aria-hidden='true'></span>  </a>"));
         } else {

@@ -22,6 +22,7 @@ $lang['Stock'] = "Stock";
 $lang['Manage'] = "Manage";
 $lang['Pet'] ="Pet";
 $lang['List'] ="List";
+$lang['Doctor'] ="Doctor";
 $lang['Type'] ="Type";
 $lang['Breed'] = "Breed";
 $lang['Name'] = "Name";

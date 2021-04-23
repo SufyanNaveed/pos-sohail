@@ -59,9 +59,9 @@
             for="date_of_birth">Date of Birth</label>
 
             <div class="col-sm-6">
-                <input type="text" class="form-control required"
+                <input type="date" class="form-control required"
                 placeholder="Date of Birth" name="date_of_birth" id="petdob"
-                autocomplete="false" readonly value="<?php echo date("d-m-Y")?>">
+                autocomplete="false" value="<?php echo date("d-m-Y")?>">
             </div>
         </div>
         <div class="form-group row">
@@ -84,32 +84,15 @@
                        class="form-control margin-bottom required" name="mark_difference">
             </div>
         </div>
-        <hr>
-        <input type="hidden" name="pet_photo" id="pet_photo">
-            <div class="form-group row"><label
-                class="col-sm-2 col-form-label"><?php echo $this->lang->line('Image') ?></label>
-            <div class="col-sm-6">
-            <div id="progress" class="progress">
-                <div class="progress-bar progress-bar-success"></div>
-            </div>
-            <!-- The container for the uploaded files -->
-            <table id="files" class="files"></table>
-            <br>
-            <span class="btn btn-success fileinput-button">
-            <i class="glyphicon glyphicon-plus"></i>
-            <span>Select files...</span>
-                <!-- The file input field used as target for the file upload widget -->
-            <input id="fileupload" type="file" name="files">
-            </span>
-            <br>
-            <pre>Allowed: gif, jpeg, png (Use light small weight images for fast loading - 200x200)</pre>
-            <br>
-            <!-- The global progress bar -->
+        <div class="form-group row">
 
-            </div>
-            </div>
+        <label class="col-sm-2 col-form-label"
+        for="pet_photo">Pet Photo</label>
 
-        
+        <div class="col-sm-6">
+        <input type="file" name="pet_photo" class="form-control margin-bottom" accept="image/*" />
+        </div>
+        </div>
         <div class="form-group row">
 
             <label class="col-sm-2 col-form-label"></label>
@@ -125,37 +108,3 @@
         </form>
     </div>
 </div>
-<script src="<?php echo assets_url('assets/myjs/jquery.ui.widget.js'); ?>"></script>
-<script src="<?php echo assets_url('assets/myjs/jquery.fileupload.js') ?>"></script>
-<script>
-
-        /*jslint unparam: true */
-    /*global window, $ */
-    $(function () {
-        'use strict';
-        // Change this to the location of your server-side upload handler:
-        var url = '<?php echo base_url() ?>pets/file_handling';
-        $('#fileupload').fileupload({
-            url: url,
-            dataType: 'json',
-            formData: {'<?=$this->security->get_csrf_token_name()?>': crsf_hash},
-            done: function (e, data) {
-                var img = 'default.png';
-                $.each(data.result.files, function (index, file) {
-                    $('#files').html('<tr><td><a data-url="<?php echo base_url() ?>pets/file_handling?op=delete&name=' + file.name + '" class="aj_delete"><i class="btn-danger btn-sm icon-trash-a"></i> ' + file.name + ' </a><img style="max-height:200px;" src="<?php echo base_url() ?>userfiles/pet/' + file.name + '"></td></tr>');
-                    img = file.name;
-                });
-
-                $('#pet_photo').val(img);
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress .progress-bar').css(
-                    'width',
-                    progress + '%'
-                );
-            }
-        }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
-    });
-</script>

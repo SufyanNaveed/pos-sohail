@@ -24,6 +24,7 @@ $lang['Pet'] = "حيوان اليف";
 $lang['List'] = "قائمة";
 $lang['Type'] = "يكتب";
 $lang['Breed'] = "تكاثر";
+$lang['Doctor'] = "طبيب";
 $lang['Mark Difference'] = "مارك الفرق";
 $lang['Color'] = "اللون";
 $lang['Items Manager'] = "مدير العناصر";
