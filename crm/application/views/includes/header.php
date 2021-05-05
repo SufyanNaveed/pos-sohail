@@ -37,6 +37,10 @@
     <link rel="stylesheet" href="<?php echo assets_url('crm-assets/custom/jquery.dataTables.css') ?>">
     <link rel="stylesheet" href="<?php echo assets_url('crm-assets/custom/summernote-bs4.css'); ?>">
     <link rel="stylesheet" href="<?php echo assets_url('crm-assets/custom/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo assets_url('crm-assets/css/custom_style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo assets_url('crm-assets/css/fullcalendar.bundle.css'); ?>">
+    
+
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="<?php echo assets_url(); ?>/crm-assets/css/style.css">
@@ -52,6 +56,8 @@
     <script src="<?php echo assets_url('crm-assets/js/icheck.min.js'); ?>"></script>
     <script src="<?php echo assets_url('crm-assets/js/jquery.form-validator.min.js'); ?>"></script>
     <script src="<?php echo assets_url('crm-assets/js/custom.js'); ?>"></script>
+    <script src='<?php echo assets_url("crm-assets/js/moment.min.js")?>'></script>
+    <script src='<?php echo assets_url("crm-assets/js/fullcalendar.min.js")?>'></script>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
       class="vertical-layout vertical-menu 2-columns  fixed-navbar  menu-expanded">
@@ -154,6 +160,11 @@
                 echo 'active';
             } ?>">
                 <a href="<?php echo base_url(); ?>user/profile"> <i class="icon-user1"></i><span class="menu-title"> <?php echo $this->lang->line('Profile') ?> </span></a>
+            </li>
+            <li class="nav-item <?php if ($this->uri->segment(2) == "schedule") {
+                echo 'active';
+            } ?>">
+                <a href="<?php echo base_url(); ?>booking/schedule"> <i class="icon-clock"></i><span class="menu-title">Book Specialist  </span></a>
             </li>
             <li class="nav-item <?php if ($this->uri->segment(1) == "pets") {
                 echo 'active';

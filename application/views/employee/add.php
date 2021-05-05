@@ -56,13 +56,13 @@
 
                     <div class="col-sm-5">
                         <select name="roleid" class="form-control margin-bottom">
-                            <option value="4"><?= $this->lang->line('Business Manager') ?></option>
-                            <option value="3"><?= $this->lang->line('Sales Manager') ?></option>
-                            <option value="5"><?= $this->lang->line('Business Owner') ?></option>
-                            <option value="2"><?= $this->lang->line('Sales Person') ?></option>
-                            <option value="1"><?= $this->lang->line('Inventory Manager') ?></option>
-                            <option value="-1"><?= $this->lang->line('Project Manager') ?></option>
-                            <option value="-1"><?= $this->lang->line('Doctor') ?></option>
+                            <!-- <option value="4">< ? = $this->lang->line('Business Manager') ?></option>
+                            <option value="3">< ? = $this->lang->line('Sales Manager') ?></option>
+                            <option value="5">< ?= $this->lang->line('Business Owner') ?></option>
+                            <option value="2">< ?= $this->lang->line('Sales Person') ?></option>
+                            <option value="1">< ?= $this->lang->line('Inventory Manager') ?></option>
+                            <option value="-1">< ?= $this->lang->line('Project Manager') ?></option> -->
+                            <option value="6"><?= $this->lang->line('Doctor') ?></option>
                         </select>
                     </div>
                 </div>
@@ -88,6 +88,150 @@
                     </select>
                 </div>
             </div>
+            <hr>
+            <!-- get Doctor Detail area -->
+            <div>
+            </div>
+            <h5>Doctor Professional Detail </h5>
+            <hr>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"
+                for="whatsapp_link">WhatsApp profile Link</label>
+                <div class="col-sm-10">
+                <input type="text" placeholder="Whatsapp profile Link"
+                class="form-control margin-bottom" name="whatsapp_link">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"
+                for="speciality">speciality(s)</label>
+                <div class="col-sm-10">
+                <a href="javascript:;" class="float-right" id="add">+add speciality(s)</a>
+                </div>
+            </div>
+            <div>
+            <div class="form-group row">
+            <div class="col-sm-10">
+                <div  id="speciality_data"></div>
+            </div>
+            </div>
+<style>
+table , th , td {
+    border: 1px solid black;
+}
+th,td{
+    padding: 15px;
+}
+</style>
+Availability(s)
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label"
+                for="whatsapp_link">1<sup>st</sup> Shift </label>
+                <div class="col-sm-5">
+                <table>
+                <tr>
+                <th> Days </th>
+                <th> Availability(yes/no) </th>
+                <th> From </th>
+                <th> To </th>
+                </tr>
+                <tr>
+                <td>Monday </td><td style="text-align: center;"> <input type="checkbox" name="mon_availability" checked> </td> <td> <input type="time" name="mon_from" value="08:00"></td>  <td> <input type="time" name="mon_to" value="12:00"></td>
+                </tr>
+                <tr>
+                <td>Tuesday </td><td style="text-align: center;"> <input type="checkbox" name="tue_availability" checked> </td> <td> <input type="time" name="tue_from" value="08:00"></td>  <td> <input type="time" name="tue_to" value="12:00"></td>
+                </tr>
+                <tr>
+                <td>Wednesday </td> <td style="text-align: center;"> <input type="checkbox" name="wed_availability" checked> </td> <td> <input type="time" name="wed_from" value="08:00"></td>  <td> <input type="time" name="wed_to" value="12:00"></td>
+                </tr>
+                <tr>
+                <td>Thursday </td><td style="text-align: center;"> <input type="checkbox"  name="thu_availability" checked> </td> <td> <input type="time" name="thu_from" value="08:00"></td>  <td> <input type="time" name="thu_to" value="12:00"></td>
+                </tr>
+                <tr>
+                <td>Friday </td><td style="text-align: center;"> <input type="checkbox" name="fri_availability" checked> </td> <td> <input type="time" name="fri_from" value="08:00"></td>  <td> <input type="time" name="fri_to" value="12:00"></td>
+                </tr>
+                <tr>
+                <td>Saturday </td><td style="text-align: center;"> <input type="checkbox" name="sat_availability" > </td> <td> <input type="time" name="sat_from" value="08:00"></td>  <td> <input type="time" name="sat_to" value="12:00"></td>
+                </tr>
+                <tr>
+                <td>Sunday </td><td style="text-align: center;"> <input type="checkbox" name="sun_availability"  > </td> <td> <input type="time" name="sun_from" value="08:00"></td>  <td> <input type="time" name="sun_to" value="12:00"></td>
+                </tr>
+                </tr>
+                </table>
+                </div>
+                <label class="col-sm-1 col-form-label"
+                for="whatsapp_link">2<sup>nd</sup> Shift</label>
+
+                <div class="col-sm-5">
+                <table>
+                <tr>
+                <th> Availability(yes/no) </th>
+                <th> From </th>
+                <th> To </th>
+                </tr>
+                <tr>
+                <td style="text-align: center;"> <input type="checkbox" name="mon_availability_ev" checked> </td> <td> <input type="time" name="mon_from_ev" value="12:00"></td>  <td> <input type="time" name="mon_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td style="text-align: center;"> <input type="checkbox" name="tue_availability_ev" checked> </td> <td> <input type="time" name="tue_from_ev" value="12:00"></td>  <td> <input type="time" name="tue_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                 <td style="text-align: center;"> <input type="checkbox" name="wed_availability_ev" checked> </td> <td> <input type="time" name="wed_from_ev" value="12:00"></td>  <td> <input type="time" name="wed_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td style="text-align: center;"> <input type="checkbox"  name="thu_availability_ev" checked> </td> <td> <input type="time" name="thu_from_ev" value="12:00"></td>  <td> <input type="time" name="thu_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td style="text-align: center;"> <input type="checkbox" name="fri_availability_ev" checked> </td> <td> <input type="time" name="fri_from_ev" value="12:00"></td>  <td> <input type="time" name="fri_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td style="text-align: center;"> <input type="checkbox" name="sat_availability_ev" > </td> <td> <input type="time" name="sat_from_ev" value="12:00"></td>  <td> <input type="time" name="sat_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td style="text-align: center;"> <input type="checkbox" name="sun_availability_ev"  > </td> <td> <input type="time" name="sun_from_ev" value="12:00"></td>  <td> <input type="time" name="sun_to_ev" value="16:00"></td>
+                </tr>
+                </tr>
+                </table>
+                </div>
+            </div>
+<!-- 
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"
+                for="whatsapp_link">Availability(s) Evening</label>
+                <div class="col-sm-10">
+                <table>
+                <tr>
+                <th> Days </th>
+                <th> Availability(yes/no) </th>
+                <th> From </th>
+                <th> To </th>
+                </tr>
+                <tr>
+                <td>Monday </td><td style="text-align: center;"> <input type="checkbox" name="mon_availability_ev" checked> </td> <td> <input type="time" name="mon_from_ev" value="12:00"></td>  <td> <input type="time" name="mon_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td>Tuesday </td><td style="text-align: center;"> <input type="checkbox" name="tue_availability_ev" checked> </td> <td> <input type="time" name="tue_from_ev" value="12:00"></td>  <td> <input type="time" name="tue_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td>Wednesday </td> <td style="text-align: center;"> <input type="checkbox" name="wed_availability_ev" checked> </td> <td> <input type="time" name="wed_from_ev" value="12:00"></td>  <td> <input type="time" name="wed_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td>Thursday </td><td style="text-align: center;"> <input type="checkbox"  name="thu_availability_ev" checked> </td> <td> <input type="time" name="thu_from_ev" value="12:00"></td>  <td> <input type="time" name="thu_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td>Friday </td><td style="text-align: center;"> <input type="checkbox" name="fri_availability_ev" checked> </td> <td> <input type="time" name="fri_from_ev" value="12:00"></td>  <td> <input type="time" name="fri_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td>Saturday </td><td style="text-align: center;"> <input type="checkbox" name="sat_availability_ev" > </td> <td> <input type="time" name="sat_from_ev" value="12:00"></td>  <td> <input type="time" name="sat_to_ev" value="16:00"></td>
+                </tr>
+                <tr>
+                <td>Sunday </td><td style="text-align: center;"> <input type="checkbox" name="sun_availability_ev"  > </td> <td> <input type="time" name="sun_from_ev" value="12:00"></td>  <td> <input type="time" name="sun_to_ev" value="16:00"></td>
+                </tr>
+                </tr>
+                </table>
+                </div>
+            </div> -->
 
             <hr>
 
@@ -233,6 +377,39 @@
         var actionurl = baseurl + 'user/submit_user';
         actionProduct1(actionurl);
     });
+    var i=0;
+    $("#add").click(function(){
+        i++; 
+        $("#speciality_data").append(
+                `<div id="row`+i+`" class="col-12">
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                            <span>Enter speciality</span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="position-relative has-icon-left">
+                                <input type="text" class="form-control"
+                                        name="speciality_data[`+i+`]" value=""
+                                        required autocomplete="off">
+                                <div class="form-control-position">
+                                    <i class="feather icon-help-circle"></i>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col col-md-2">
+                        <i id="`+i+`" class="text-danger btn_remove fa fa-trash"></i>
+                        </div>
+                    </div>
+                
+                </div>`
+            )
+    });
+
+    $(document).on('click', '.btn_remove', function(){
+        var button_id = $(this).attr("id");   
+        $('#row'+button_id+'').remove();  
+     });
 </script>
 
 <script>

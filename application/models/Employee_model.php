@@ -354,7 +354,7 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary = 0, $commission = 0, $department = 0)
+    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary = 0, $commission = 0, $department = 0,$whatsapp_link)
     {
         $data = array(
             'id' => $id,
@@ -368,7 +368,8 @@ class Employee_model extends CI_Model
             'phone' => $phone,
             'dept' => $department,
             'salary' => $salary,
-            'c_rate' => $commission
+            'c_rate' => $commission,
+            'whatsapp_link'=>$whatsapp_link
         );
 
 

@@ -24,7 +24,9 @@ class Employee extends CI_Controller
     {
         parent::__construct();
         $this->load->model('employee_model', 'employee');
+        $this->load->model('doctor_model', 'doctor');
         $this->load->library("Aauth");
+        $this->load->library("form_validation");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
         }
@@ -133,24 +135,149 @@ class Employee extends CI_Controller
         $salary = numberClean($this->input->post('salary', true));
         $commission = $this->input->post('commission', true);
         $department = $this->input->post('department', true);
+        $whatsapp_link = $this->input->post('whatsapp_link', true);
+        $speciality_data = $this->input->post('speciality_data', true);
 
+        $this->form_validation->set_rules('speciality_data[]', 'Speciality', 'required');
+        
 
-        $a = $this->aauth->create_user($email, $password, $username);
-
-        if ((string)$this->aauth->get_user($a)->id != $this->aauth->get_user()->id) {
-            $nuid = (string)$this->aauth->get_user($a)->id;
-
-            if ($nuid > 0) {
-
-
-                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department);
-
-            }
-
-        } else {
+        if($this->form_validation->run()==false){
             echo json_encode(array('status' => 'Error', 'message' =>
-                'There has been an error, please try again.'));
+                'Speciality is required.'));
+        }else{
+            $a = $this->aauth->create_user($email, $password, $username);
+
+            if ((string)$this->aauth->get_user($a)->id != $this->aauth->get_user()->id) {
+                $nuid = (string)$this->aauth->get_user($a)->id;
+                if ($nuid > 0) {
+                    $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department,$whatsapp_link);
+                    $d=$this->storeSpeciality($nuid,$speciality_data);
+                    $avail=$this->storeAvailability($nuid,$this->input->post());
+                }
+    
+            } else {
+                echo json_encode(array('status' => 'Error', 'message' =>
+                    'There has been an error, please try again.'));
+            }
         }
+        
+    }
+    public function storeSpeciality($userId,$speciality_data)
+    {
+        $data=array();
+        foreach($speciality_data as $speciality){
+            $temp['name']=$speciality;
+            $temp['advisor_id']=$userId;
+            $data[]=$temp;
+        }
+        return $this->doctor->addSpeciality($data);
+    }
+    public function storeAvailability($userId,$posted)
+    {
+        $data=array();
+        $temp['day']='monday';
+        $temp['from']=$posted['mon_from'];
+        $temp['to']=$posted['mon_to'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='morning';
+        $temp['is_available']=$posted['mon_availability']=='on'?1:0;
+        $data[]=$temp;
+        $temp['day']='tuesday';
+        $temp['from']=$posted['tue_from'];
+        $temp['to']=$posted['tue_to'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='morning';
+        $temp['is_available']=$posted['tue_availability']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='wednesday';
+        $temp['from']=$posted['wed_from'];
+        $temp['to']=$posted['wed_to'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='morning';
+        $temp['is_available']=$posted['wed_availability']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='thursday';
+        $temp['from']=$posted['thu_from'];
+        $temp['to']=$posted['thu_to'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='morning';
+        $temp['is_available']=$posted['thu_availability']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='friday';
+        $temp['from']=$posted['fri_from'];
+        $temp['to']=$posted['fri_to'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='morning';
+        $temp['is_available']=$posted['fri_availability']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='saturday';
+        $temp['from']=$posted['sat_from'];
+        $temp['to']=$posted['sat_to'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='morning';
+        $temp['is_available']=$posted['sat_availability']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='sunday';
+        $temp['from']=$posted['sun_from'];
+        $temp['to']=$posted['sun_to'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='morning';
+        $temp['is_available']=$posted['sun_availability']=='on' ? 1 : 0;
+        $data[]=$temp;
+
+        //evening
+        $temp['day']='monday';
+        $temp['from']=$posted['mon_from_ev'];
+        $temp['to']=$posted['mon_to_ev'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='evening';
+        $temp['is_available']=$posted['mon_availability_ev']=='on'?1:0;
+        $data[]=$temp;
+        $temp['day']='tuesday';
+        $temp['from']=$posted['tue_from_ev'];
+        $temp['to']=$posted['tue_to_ev'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='evening';
+        $temp['is_available']=$posted['tue_availability_ev']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='wednesday';
+        $temp['from']=$posted['wed_from_ev'];
+        $temp['to']=$posted['wed_to_ev'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='evening';
+        $temp['is_available']=$posted['wed_availability_ev']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='thursday';
+        $temp['from']=$posted['thu_from_ev'];
+        $temp['to']=$posted['thu_to_ev'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='evening';
+        $temp['is_available']=$posted['thu_availability_ev']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='friday';
+        $temp['from']=$posted['fri_from_ev'];
+        $temp['to']=$posted['fri_to_ev'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='evening';
+        $temp['is_available']=$posted['fri_availability_ev']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='saturday';
+        $temp['from']=$posted['sat_from_ev'];
+        $temp['to']=$posted['sat_to_ev'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='evening';
+        $temp['is_available']=$posted['sat_availability_ev']=='on' ? 1 : 0;
+        $data[]=$temp;
+        $temp['day']='sunday';
+        $temp['from']=$posted['sun_from_ev'];
+        $temp['to']=$posted['sun_to_ev'];
+        $temp['advisor_id']=$userId;
+        $temp['time']='evening';
+        $temp['is_available']=$posted['sun_availability_ev']=='on' ? 1 : 0;
+        $data[]=$temp;
+
+        return $this->doctor->addAvailability($data);
+        
     }
 
     public function invoices()
