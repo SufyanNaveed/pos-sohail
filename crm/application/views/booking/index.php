@@ -189,37 +189,25 @@ $('.select-time-calendar.my-calendar').on('click', '.fc-day-top', function() {
         if(data.status==404){
             $("#error-msg").text('Please select differnet date. No Availablity on this day!');
         }else{
-
-            // data.data.map(itm => {
-            //     itm.map(time=>{
-            //     $('.times-list').append(
-            //             i!=0?
-            //         `<div class="col-12 mb-3">
-            //             <button type="button" data-time-from="`+time.from+`" data-time-to="`+time.to+`" class="btn times-block-btn">`+time.fromVisual+` - `+time.toVisual+`</button>
-            //         </div>`:
-            //         `<div class="col-12 mb-3">
-            //             <span>Timeframe: <b>`+time.from+`-`+time.toVisual+`</b></span>
-            //          </div>`
-            //         );
-            //         i++;
-            //     });
-            //     i=0;
-            // });
-                var  i=0;
+            let i=0;
+            let shift=1;
             data.data.map(itm => {
                 itm.slots.map(time=>{
                 $('.times-list').append(
                         i!=0?
                     `<div class="col-12 mb-3">
-                        <button type="button" data-time-from="`+time.from+`" data-time-to="`+time.to+`" class="btn times-block-btn">`+time.from+` - `+time.to+`</button>
+                        <button type="button" data-time-from="`+ time.from+`" data-time-to="`+time.to+`" class="btn times-block-btn">`+time.from+` - `+time.to+`</button>
                     </div>`:
                     `<div class="col-12 mb-3">
-                        <span>Timeframe: <b>`+itm.from+`-`+itm.to+`</b></span>
-                     </div>`
+                        <span> Shift(`+shift +`) Timeframe: <b>`+itm.from+`-`+itm.to+`</b></span>
+                     </div><div class="col-12 mb-3">
+                        <button type="button" data-time-from="`+ time.from+`" data-time-to="`+time.to+`" class="btn times-block-btn">`+time.from+` - `+time.to+`</button>
+                    </div>`
                     );
                     i++;
                 });
                 i=0;
+                shift++;
             });
 
         }
@@ -229,7 +217,35 @@ $('.select-time-calendar.my-calendar').on('click', '.fc-day-top', function() {
             return;
         });
     });
+//time selection
 
+$('.times-list').on('click', '.times-block-btn', function() {
+        var subTopicId = $('#subTopics').val();
+        var isReschdule=$('#isReschdule').text();
+        if($(this).hasClass('selected')) {
+            $('.ammount').hide();
+            $('.after-coupon-price').hide();
+            $('.copoun-section').hide();
+            $('.book-now').attr('disabled', true);
+            $(this).removeClass('selected');
+            $('.selectedTimeFrom').val(null);
+            $('.selectedTimeTo').val(null);
+            $('.speciality-field-error').hide();
+        }
+        else {
+            // $('.ammount').show();
+            // if($('.new-price').text() && $('.new-price').text() != 0) {
+            //     $('.after-coupon-price').show();
+            // }
+            // $('.copoun-section').css('display','flex');
+            $('.book-now').attr('disabled', false);
+            $('input.selectedTimes').val();
+            $('.times-block-btn').removeClass('selected');
+            $(this).addClass('selected');
+            $('.selectedTimeFrom').val($(this).attr('data-time-from'));
+            $('.selectedTimeTo').val($(this).attr('data-time-To'));
+        }
+    });
 
 });
 

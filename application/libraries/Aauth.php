@@ -746,9 +746,9 @@ class Aauth
             $this->error($this->CI->lang->line('aauth_error_username_invalid'));
             $valid = FALSE;
         }
-        if (!$valid) {
-            return FALSE;
-        }
+        // if (!$valid) {
+        //     return FALSE;
+        // }
 
         $data = array(
             'email' => $email,

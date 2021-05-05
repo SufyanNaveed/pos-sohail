@@ -50,12 +50,13 @@ class Booking extends CI_Controller{
             $array_of_time = array ();
             $array_of_slot = array ();
             $splitByDuration=20;
-            $add_mins  = $splitByDuration * 60;
+            
 
             $array_of_cal = array ();
             foreach($data['availability'] as $avil){
             $start_time    = strtotime ($avil->from); //change to strtotime
             $end_time      = strtotime ($avil->to); //change to strtotime
+            $add_mins  = $splitByDuration * 60;
             $i=0;
             $array['from']=date ("h:i a", $start_time);
             $array['to']=date ("h:i a", $end_time);
@@ -70,9 +71,11 @@ class Booking extends CI_Controller{
                     $array_of_time[] = $array_of_slot;
                     $i++;
                 }
+            array_pop($array_of_time);
 
             $array['slots']=$array_of_time;
             $array_of_cal[]=$array;
+            unset($array_of_time);
             }
             echo  json_encode(['status'=>200,'data'=>$array_of_cal]);
         }else{
