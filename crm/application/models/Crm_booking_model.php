@@ -54,42 +54,49 @@ class Crm_booking_model extends CI_Model
     }
 
 
-    public function addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo)
+    public function addnew($data)
     {
-        $this->db->insert('pos_pet_color', ['title'=>$pet_color]);
-        $pet_colorId = $this->db->insert_id();
-        $this->db->insert('pos_pet_breeds', ['title'=>$pet_breed]);
-        $breedId = $this->db->insert_id();
-        $this->db->insert('pos_pet_types', ['title'=>$pet_type]);
-        $typeId = $this->db->insert_id();
-        // $this->db->insert('pos_pet_mark_difference', ['title'=>$mark_difference]);
-        // $markId = $this->db->insert_id();
-        $data = array(
-            'pet_name' => $pet_name,
-            'microchip_number' => $microchip_number,
-            // 'adate' => date('Y-m-d H:i:s'),
-            'pet_color' => $pet_colorId,
-            'pet_breed' => $breedId,
-            'pet_type' => $typeId,
-            'mark_difference'=>$mark_difference,
-            'date_of_birth'=>$date_of_birth,
-            'pet_photo'=>$pet_photo
-            
-        );
-
-        if ($this->db->insert('pos_pets', $data)) {
-            
-            $pet_id=$this->db->insert_id();
-            $data=$this->session->userdata();
-            $customerId=$data['user_details'][0]->user_id;
-            $this->db->insert('pos_customer_pets', ['customer_id'=>$customerId,"pet_id"=>$pet_id]);
-
-            echo json_encode(array('status' => 'Success', 'message' =>
-                $this->lang->line('ADDED'). "  <a href='".base_url('pets/index')."' class='btn btn-blue btn-lg'><span class='fa fa-list-alt' aria-hidden='true'></span>  </a> <a href='add' class='btn btn-info btn-lg'><span class='fa fa-plus-circle' aria-hidden='true'></span>  </a>"));
-        } else {
-            echo json_encode(array('status' => 'Error', 'message' =>
-                $this->lang->line('ERROR')));
+        if ($this->db->insert('bookings',$data)) {
+            // set flash data
+         $this->session->set_flashdata('success', 'Booking Scheduled Successfully'); 
+            redirect('/booking/schedule'); 
+        }else{
+            $this->session->set_flashdata('error', 'Error while adding booking'); 
+            redirect('/booking/schedule');
         }
+        // $pet_colorId = $this->db->insert_id();
+        // $this->db->insert('pos_pet_breeds', ['title'=>$pet_breed]);
+        // $breedId = $this->db->insert_id();
+        // $this->db->insert('pos_pet_types', ['title'=>$pet_type]);
+        // $typeId = $this->db->insert_id();
+        // // $this->db->insert('pos_pet_mark_difference', ['title'=>$mark_difference]);
+        // // $markId = $this->db->insert_id();
+        // $data = array(
+        //     'pet_name' => $pet_name,
+        //     'microchip_number' => $microchip_number,
+        //     // 'adate' => date('Y-m-d H:i:s'),
+        //     'pet_color' => $pet_colorId,
+        //     'pet_breed' => $breedId,
+        //     'pet_type' => $typeId,
+        //     'mark_difference'=>$mark_difference,
+        //     'date_of_birth'=>$date_of_birth,
+        //     'pet_photo'=>$pet_photo
+            
+        // );
+
+        // if ($this->db->insert('pos_pets', $data)) {
+            
+        //     $pet_id=$this->db->insert_id();
+        //     $data=$this->session->userdata();
+        //     $customerId=$data['user_details'][0]->user_id;
+        //     $this->db->insert('pos_customer_pets', ['customer_id'=>$customerId,"pet_id"=>$pet_id]);
+
+        //     echo json_encode(array('status' => 'Success', 'message' =>
+        //         $this->lang->line('ADDED'). "  <a href='".base_url('pets/index')."' class='btn btn-blue btn-lg'><span class='fa fa-list-alt' aria-hidden='true'></span>  </a> <a href='add' class='btn btn-info btn-lg'><span class='fa fa-plus-circle' aria-hidden='true'></span>  </a>"));
+        // } else {
+        //     echo json_encode(array('status' => 'Error', 'message' =>
+        //         $this->lang->line('ERROR')));
+        // }
 
     }
 

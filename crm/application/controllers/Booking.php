@@ -86,4 +86,21 @@ class Booking extends CI_Controller{
 
     }
 
+    public function addBooking()
+    {
+
+        $data=array();
+        $data['pet_id']=$this->input->post('pet_id',true);
+        $data['doctor_id']=$this->input->post('doctor_id',true);
+        $data['speciality_id']=$this->input->post('speciality_id',true);
+        $data['on']=$this->input->post('on',true);
+        $data['from']=$this->input->post('from',true);
+        $data['to']=$this->input->post('to',true);
+        $userData=$this->session->userdata("user_details");
+        if(isset($userData[0])){
+            $data['user_id']=$userData[0]->user_id;
+        }
+       return $this->booking->addnew($data);
+    }
+
 }

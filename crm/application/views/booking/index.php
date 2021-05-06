@@ -9,10 +9,16 @@
     <div class="row">
         <div class="col-12">
             <h2 class="login-title c-black mb-4">
-
+            <?php if($this->session->flashdata('success')): ?>
+            <p class="text-success"><?php echo $this->session->flashdata('success'); ?></p>
+            <?php endif; ?>
+            <?php if($this->session->flashdata('error')): ?>
+            <p class="text-danger"><?php echo $this->session->flashdata('error'); ?></p>
+            <?php endif; ?>
             </h2>
             <div class="white-block h-auto overflow-hidden p-0">
-                <form action="{{route('BookInsert')}}" enctype="multipart/form-data" method="POST">
+                <form action="<?php echo base_url('booking/addBooking') ?>" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                     <div class="row mb-3 ml-1 mr-1 mt-3 mx-0">
 
                     <h3 class="box-title">Booking Schedule</h3>
@@ -67,7 +73,7 @@
                         <div class="col-lg-5 availabel-times-block">
                             <div class="p-md-4 p-3">
                                <span class="text-danger" id="error-msg"></span>
-                                <input type="hidden" class="advisorId" name="advisor_id" value="">
+                                <!-- <input type="hidden" class="advisorId" name="advisor_id" value=""> -->
                                 <input type="hidden" class="selectedTimeFrom" name="from" required>
                                 <input type="hidden" class="selectedTimeTo" name="to" required>
                                 <input type="hidden" class="date" name="on" value="">
