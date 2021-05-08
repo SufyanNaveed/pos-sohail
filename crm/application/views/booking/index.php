@@ -70,7 +70,7 @@
                         <div id="calendar" class="new-custom-calendar select-time-calendar my-calendar user-profile-calendar"></div>
                         </div>
                     </div>
-                        <div class="col-lg-5 availabel-times-block">
+                        <div class="col-lg-5 availabel-times-block" id="timeblock" hidden>
                             <div class="p-md-4 p-3">
                                <span class="text-danger" id="error-msg"></span>
                                 <!-- <input type="hidden" class="advisorId" name="advisor_id" value=""> -->
@@ -169,7 +169,7 @@ $(document).ready(function() {
 
 // get availabilities */
 $('.select-time-calendar.my-calendar').on('click', '.fc-day-top', function() {
-
+            $("#timeblock").removeAttr('hidden');
         var doctorId=$("#doctor").val();
         var specialityId=$("#speciality").val();
         var petId=$("#pet").val();

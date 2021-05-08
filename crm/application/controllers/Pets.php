@@ -73,6 +73,19 @@ class Pets extends CI_Controller{
         $this->load->view('pet/edit',$data);
         $this->load->view('includes/footer');   
     }
+    public function preview()
+    {
+        $head['usernm'] = $this->session->userdata()->username;
+        $head['title'] = 'Pets-edit';
+        $data['pet']=$this->pets->getPets()->row();
+        if(empty($data['pet'])){
+            return show_404();
+        }
+        $this->load->view('includes/header');
+        $this->load->view('pet/preview',$data);
+        $this->load->view('includes/footer');   
+ 
+    }
     public function update()
     {
         $pet_id=$this->input->post('pet_id');

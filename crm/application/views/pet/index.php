@@ -45,7 +45,10 @@
                     <td>$row->pet_type</td>
                     <td>
                     <a href='" . base_url("pets/edit?id=$pid") . 
-                    "' class='btn btn-warning btn-sm'><i class='fa fa-pencil'></i> " . $this->lang->line('Edit') . "</a>
+                    "' class='btn btn-warning btn-sm' title='Edit'><i class='icon-pencil'></i></a>
+                    <a href='" . base_url("pets/preview?id=$pid") . 
+                    "' class='btn btn-info btn-sm' title='Preview'><i class='icon-eye'></i></a>
+
                     </td></tr>";
                         $i++;
                     }
