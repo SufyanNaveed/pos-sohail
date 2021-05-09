@@ -97,4 +97,14 @@ class Pets extends CI_Controller{
         $this->pets->delete($pet_id);
     }
 
+    public function appointments()
+    {
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Appointments';
+        $this->load->view('fixed/header', $head);
+        $data['pets']=$this->pets->getAppointmentPets()->result();
+        $this->load->view('appointments/index',$data);
+        $this->load->view('fixed/footer');
+    }
+
 }

@@ -538,3 +538,34 @@ if (!function_exists('dd')) {
         exit;
     }
  }
+
+
+function Bookings($id)
+{
+   $CI = get_instance();
+    $CI->db->select('*');
+    $CI->db->from('bookings');
+    $CI->db->where('doctor_id', $id);
+    $qr = $CI->db->get();
+    return $qr->result();
+}
+
+function DoctorName($id)
+{
+   $CI = get_instance();
+    $CI->db->select('username');
+    $CI->db->from('geopos_users');
+    $CI->db->where('id', $id);
+    $qr = $CI->db->get();
+    return $qr->row('username');
+}
+
+function Specialities($id)
+{
+   $CI = get_instance();
+    $CI->db->select('name');
+    $CI->db->from('advisor_specialities');
+    $CI->db->where('id', $id);
+    $qr = $CI->db->get();
+    return $qr->row('name');
+}

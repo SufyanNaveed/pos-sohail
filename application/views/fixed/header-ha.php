@@ -1217,7 +1217,9 @@
                     <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>pets/index"
                                 data-toggle="dropdown"> <?php echo $this->lang->line('Pet'); ?></a>
                             </li>
-                        
+                    <li data-menu=""><a class="dropdown-item" href="<?= base_url(); ?>pets/appointments"
+                                data-toggle="dropdown"> <?php echo $this->lang->line('Appointments'); ?></a>
+                            </li>                        
                     </ul>
                 </li>
 

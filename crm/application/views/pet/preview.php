@@ -14,7 +14,7 @@
         ?>
         <hr>
 
-        <div class="form-group row">
+       <div class="form-group row">
 
             <label class="col-sm-2 col-form-label"
                    for="accno">Pet Name:</label>
@@ -75,21 +75,38 @@
             </div>
         </div>
         <div class="form-group row">
-
-            <label class="col-sm-2 col-form-label"
-                   for="accno">Mark Difference:</label>
-
+            <label class="col-sm-2 col-form-label" for="accno">Mark Difference:</label>
             <div class="col-sm-6">
-                <input type="text" placeholder="Mark Difference"
-                       class="form-control margin-bottom required" value="<?php echo $pet->mark_difference ?>" name="mark_difference">
+            <input type="text" placeholder="Mark Difference" class="form-control margin-bottom required" value="<?php echo $pet->mark_difference ?>" name="mark_difference">
             </div>
-            <input type="hidden" name ="pet_id" value="<?php echo $_GET['id'] ?>">
-        </div>           
-        </form>
+        </div>        
         </div>
-            </div>
-        </div>
+        <h3 class="box-title">Booking Detail</h3>
 
+                <table class="table" width="100%" border="1" style="border-collapse: 0">
+                <thead>
+                    <th>Doctor</th>
+                    <th>Specilities</th>
+                    <th>Booking Date</th>
+                    <th>From</th>
+                    <th>To</th>
+                </thead>
+                <tbody>
+                <?php foreach (Bookings($pet->id) as $key => $booking){?>
+                    <tr>
+                        <td><?php echo(DoctorName($booking->doctor_id)); ?></td>
+                        <td><?php echo(Specialities($booking->speciality_id)); ?></td>
+                        <td><?php echo($booking->on); ?></td>
+                        <td><?php echo($booking->from); ?></td>
+                        <td><?php echo($booking->to); ?></td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+                </table>
+
+            </div>
+
+        </div>
     </div>
 </div>
 </div>

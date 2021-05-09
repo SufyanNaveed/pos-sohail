@@ -27,7 +27,7 @@ class Crm_booking_model extends CI_Model
             // left join pos_pet_mark_difference m on p.mark_difference =m.id;
             $result = $this->db->query($sql);
         }
-        
+            
         return $result;
     }
 
