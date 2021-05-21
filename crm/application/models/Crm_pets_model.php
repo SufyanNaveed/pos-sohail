@@ -11,7 +11,7 @@ class Crm_pets_model extends CI_Model
             $petId=$this->input->get('id');
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
             c.title color, b.title pet_breed , t.title pet_type 
-            from pos.pos_pets p
+            from pos_pets p
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_pet_breeds b on p.pet_breed=b.id
             left join pos_pet_types t on p.pet_type =t.id where p.status<>0 and p.pet_id=".$petId;
@@ -20,7 +20,7 @@ class Crm_pets_model extends CI_Model
         }else{
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
             c.title color, b.title pet_breed  , t.title pet_type 
-            from pos.pos_pets p
+            from pos_pets p
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_pet_breeds b on p.pet_breed=b.id
             left join pos_pet_types t on p.pet_type =t.id where p.status<>0";
