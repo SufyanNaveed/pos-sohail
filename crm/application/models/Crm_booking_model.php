@@ -58,6 +58,15 @@ class Crm_booking_model extends CI_Model
     {
         if ($this->db->insert('bookings',$data)) {
             // set flash data
+            $id = $this->db->insert_id  ();
+            $queueNO = date('my');
+        $queNO =  $queueNO.str_pad($id,3,0,STR_PAD_LEFT);
+        $data = [
+            'queue_no'=>$queNO
+        ];
+        $this->db->set($data)
+		->where('id', $id)
+		->update(' bookings');
          $this->session->set_flashdata('success', 'Booking Scheduled Successfully'); 
             redirect('/booking/schedule'); 
         }else{

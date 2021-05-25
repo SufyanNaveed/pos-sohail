@@ -102,7 +102,8 @@ class Pets extends CI_Controller{
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Appointments';
         $this->load->view('fixed/header', $head);
-        $data['pets']=$this->pets->getAppointmentPets()->result();
+        $data['pets']=$this->pets->getAppointmentPets();
+    //    echo "<   pre>"; print_r($data);exit;
         $this->load->view('appointments/index',$data);
         $this->load->view('fixed/footer');
     }

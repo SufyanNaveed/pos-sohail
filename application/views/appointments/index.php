@@ -24,6 +24,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>Queue No</th>
                         <th><?php echo $this->lang->line('Pet Name') ?></th>
                         <th><?php echo $this->lang->line('Pet Photo') ?></th>
                         <th><?php echo $this->lang->line('Color') ?></th>
@@ -45,13 +46,14 @@
                     <?php 
                     $did=$this->aauth->get_user()->id;
                     $i = 1;
-                    foreach (Bookings($did) as $booking) {
+                    // foreach (Bookings($did) as $booking) {
                     foreach ($pets as $row) {
                         $pid = $row->id;
                         $total = $row->pet_color;
-                    if($pid==$booking->pet_id){
+                    // if($pid==$booking->pet_id){
                         echo "<tr>
                     <td>$i</td>
+                    <td>$row->queue_no</td>
                     <td>$row->pet_name</td>
                     <td><img class='round' src='".base_url()."userfiles/pet/". $row->pet_photo."' style='max-height: 100%;max-width: 100%'></td>
                     <td>$row->color</td>
@@ -66,14 +68,15 @@
                     </tr>";
                         $i++;
                     }
-                        }
-                    }
+                        // }
+                    // }
                     ?>
                      <!--  -->
                     </tbody>
                     <tfoot>
                     <tr>
                         <th>#</th>
+                        <th>Queue No</th>
                         <th><?php echo $this->lang->line('Pet Name') ?></th>
                         <th><?php echo $this->lang->line('Pet Photo') ?></th>
                         <th><?php echo $this->lang->line('Color') ?></th>

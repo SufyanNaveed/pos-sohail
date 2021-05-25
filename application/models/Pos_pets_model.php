@@ -36,22 +36,58 @@ class Pos_pets_model extends CI_Model
         if($this->input->get('id')!=null ){
             $petId=$this->input->get('id');
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-            c.title color, b.title pet_breed , t.title pet_type 
+            c.title color, b.title pet_breed , t.title pet_type ,bk.queue_no
             from pos_pets p
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_pet_breeds b on p.pet_breed=b.id
+            join bookings bk on p.pet_id =bk.pet_id
             left join pos_pet_types t on p.pet_type =t.id where p.status<>0 and p.pet_id=".$petId;
+            
+            
             // left join pos_pet_mark_difference m on p.mark_difference =m.id 
             $result = $this->db->query($sql);
         }else{
-            $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-            c.title color, b.title pet_breed  , t.title pet_type 
-            from pos_pets p
-            left join pos_pet_color c on p.pet_color =c.id
-            left join pos_pet_breeds b on p.pet_breed=b.id
-            left join pos_pet_types t on p.pet_type =t.id where p.status<>0";
+            $roleId=$this->aauth->get_user()->roleid;
+            $did=$this->aauth->get_user()->id;
+            // if($did = 6)
+            // {
+            //     $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+            //     c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no from pos_pets p
+            //     join pos_pet_color c on p.pet_color =c.id
+            //     join bookings bk on p.pet_id =bk.pet_id
+            //     join pos_pet_breeds b on p.pet_breed=b.id
+            //     join pos_pet_types t on p.pet_type =t.id where p.status<>0 and bk.doctor_id".$did;
+            // }
+            // $CI = get_instance();
+            // $CI->db->select('*');
+            //     $CI->db->from('bookings');
+            //     $CI->db->where('doctor_id', $did);
+            //     $qr = $CI->db->get();
+//  echo "<pre>";print_r($qr->result_array());exit;
+if($roleId == 6)
+            {
+                // echo "yes";exit;
+            $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+            c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.doctor_id from pos_pets p
+            join pos_pet_color c on p.pet_color =c.id
+            join bookings bk on p.pet_id =bk.pet_id
+            join pos_pet_breeds b on p.pet_breed=b.id
+            join pos_pet_types t on p.pet_type =t.id where p.status<>0 and bk.doctor_id=".$did;
+            
+       
+        }
+            else{
+                // echo "yes";exit;
+                $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+                c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no from pos_pets p
+                join pos_pet_color c on p.pet_color =c.id
+                join bookings bk on p.pet_id =bk.pet_id
+                join pos_pet_breeds b on p.pet_breed=b.id
+                join pos_pet_types t on p.pet_type =t.id where p.status<>0";
+            }
             // left join pos_pet_mark_difference m on p.mark_difference =m.id;
-            $result = $this->db->query($sql);
+// echo "<pre>";print_r($sql);exit;
+            $result = $this->db->query($sql)->result();
         }
         
         return $result;
