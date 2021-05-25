@@ -6,7 +6,7 @@ class Pets extends CI_Controller{
     {
         parent::__construct();
         // $this->load->library("Aauth");
-        if (! $this->session->userdata()) {
+        if (!$this->session->userdata()) {
             redirect('/user/', 'refresh');
         }
         $this->li_a = 'pets';
@@ -18,7 +18,7 @@ class Pets extends CI_Controller{
     public function index()
     {
         $head['usernm'] = $this->session->userdata()->username;
-        $data['pets']=$this->pets->getPets()->result();
+        $data['pets']= $this->pets->getPets()->result();
         $head['title'] = 'Pets-list';
         $this->load->view('includes/header');
         $this->load->view('pet/index',$data);

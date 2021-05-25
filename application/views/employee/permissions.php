@@ -37,7 +37,7 @@
                             <th><?php echo $this->lang->line('Sales Manager') ?></th>
                             <th><?php echo $this->lang->line('Business Manager') ?></th>
                             <th><?php echo $this->lang->line('Business Owner') ?></th>
-                            <th><?php echo $this->lang->line('Project Manager') ?></th>
+                            <th><?php echo $this->lang->line('Doctor') ?></th>
 
 
                         </tr>
@@ -81,7 +81,7 @@
                             <th><?php echo $this->lang->line('Sales Manager') ?></th>
                             <th><?php echo $this->lang->line('Business Manager') ?></th>
                             <th><?php echo $this->lang->line('Business Owner') ?></th>
-                            <th><?php echo $this->lang->line('Project Manager') ?></th>
+                            <th><?php echo $this->lang->line('Doctor') ?></th>
 
                         </tr>
                         </tfoot>

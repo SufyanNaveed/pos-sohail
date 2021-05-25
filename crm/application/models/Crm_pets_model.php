@@ -7,6 +7,9 @@ class Crm_pets_model extends CI_Model
 
     public function getPets()
     {
+        //  $id = $this->input->get('id');
+        // print_r($id);exit;
+        
         if($this->input->get('id')!=null ){
             $petId=$this->input->get('id');
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
@@ -14,17 +17,19 @@ class Crm_pets_model extends CI_Model
             from pos_pets p
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_pet_breeds b on p.pet_breed=b.id
+            left join pos_customer_pets pcp on p.pet_id=pcp.pet_id
             left join pos_pet_types t on p.pet_type =t.id where p.status<>0 and p.pet_id=".$petId;
             // left join pos_pet_mark_difference m on p.mark_difference =m.id 
             $result = $this->db->query($sql);
         }else{
+            $customerId = $this->session->userdata('user_details')[0]->cid;
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
             c.title color, b.title pet_breed  , t.title pet_type 
             from pos_pets p
             left join pos_pet_color c on p.pet_color =c.id
+            left join pos_customer_pets pcp on p.pet_id=pcp.pet_id
             left join pos_pet_breeds b on p.pet_breed=b.id
-            left join pos_pet_types t on p.pet_type =t.id where p.status<>0";
-            // left join pos_pet_mark_difference m on p.mark_difference =m.id;
+            left join pos_pet_types t on p.pet_type =t.id where p.status<>0 and pcp.customer_id=".$customerId;
             $result = $this->db->query($sql);
         }
         

@@ -34,7 +34,7 @@ class Quote extends CI_Controller
     public function index()
     {
         $head['title'] = "Manage Quote";
-
+        
         $this->load->view('includes/header', $head);
         $this->load->view('quotes/quotes');
         $this->load->view('includes/footer');
