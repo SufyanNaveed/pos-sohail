@@ -36,7 +36,9 @@ class Pets extends CI_Controller{
     }
     public function store()
     {
+        // echo "yes";exit;
         $pet_name = $this->input->post('pet_name');
+        // print_r($pet_name);exit;
         $pet_color = $this->input->post('pet_color');
         $pet_breed = $this->input->post('pet_breed');
         $pet_type = $this->input->post('pet_type');
@@ -54,7 +56,8 @@ class Pets extends CI_Controller{
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload('pet_photo')) {
-            $error = array('error' => $this->upload->display_errors());     
+            $error = array('error' => $this->upload->display_errors()); 
+            // print_r($error);exit;    
         } else {
             $pet_photo = array('image_metadata' => $this->upload->data('file_name'));
         }

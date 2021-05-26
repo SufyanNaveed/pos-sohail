@@ -62,9 +62,9 @@
                     <td>$row->mark_difference</td>
                     <td>$row->pet_breed</td>
                     <td>$row->pet_type</td>
-                    <td>$booking->on</td>
-                    <td>$booking->from</td>
-                    <td>$booking->to</td>
+                    <td>$row->on</td>
+                    <td>$row->from</td>
+                    <td>$row->to</td>
                     </tr>";
                         $i++;
                     }

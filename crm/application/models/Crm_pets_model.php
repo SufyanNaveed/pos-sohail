@@ -39,6 +39,7 @@ class Crm_pets_model extends CI_Model
 
     public function addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo)
     {
+        // echo "yes";exit;
         $this->db->insert('pos_pet_color', ['title'=>$pet_color]);
         $pet_colorId = $this->db->insert_id();
         $this->db->insert('pos_pet_breeds', ['title'=>$pet_breed]);

@@ -35,6 +35,7 @@ class Pets extends CI_Controller{
     }
     public function store()
     {
+        // echo "yes";exit;
         $pet_name = $this->input->post('pet_name');
         $pet_color = $this->input->post('pet_color');
         $pet_breed = $this->input->post('pet_breed');

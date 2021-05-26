@@ -299,7 +299,11 @@ class Pos_invoices extends CI_Controller
                 $service_tax = $this->input->post('service_tax');
                 $service_discount = $this->input->post('service_discount');
                 $service_subtotal = $this->input->post('service_subtotal');
+// print_r($service_name);exit;
+if(!empty($service_id))
+{
 
+    // $total_discount_s = '';
                 foreach ($service_id as $key => $value) {
 
 
@@ -330,7 +334,7 @@ class Pos_invoices extends CI_Controller
                     $amt_s = numberClean($service_qty[$key]);
                     $itc_s += $amt_s;
                 }
-
+            }
                 if ($serindex > 0) {
                     $this->db->insert_batch('geopos_invoice_items', $servicelist);
                     $this->db->set(array('discount' => rev_amountExchange_s(amountFormat_general($total_discount), $currency, $this->aauth->get_user()->loc), 'tax' => rev_amountExchange_s(amountFormat_general($total_tax), $currency, $this->aauth->get_user()->loc), 'items' => $itc));

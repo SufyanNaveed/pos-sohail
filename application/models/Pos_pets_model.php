@@ -34,9 +34,11 @@ class Pos_pets_model extends CI_Model
     public function getAppointmentPets()
     {
         if($this->input->get('id')!=null ){
+            // print_r($this->input->get('id'));exit;
+
             $petId=$this->input->get('id');
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-            c.title color, b.title pet_breed , t.title pet_type ,bk.queue_no
+            c.title color, b.title pet_breed , t.title pet_type ,bk.queue_no,bk.on,bk.to,bk.from
             from pos_pets p
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_pet_breeds b on p.pet_breed=b.id
@@ -68,7 +70,7 @@ if($roleId == 6)
             {
                 // echo "yes";exit;
             $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-            c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.doctor_id from pos_pets p
+            c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.queue_no,bk.on,bk.to,bk.from from pos_pets p
             join pos_pet_color c on p.pet_color =c.id
             join bookings bk on p.pet_id =bk.pet_id
             join pos_pet_breeds b on p.pet_breed=b.id
@@ -79,7 +81,7 @@ if($roleId == 6)
             else{
                 // echo "yes";exit;
                 $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-                c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no from pos_pets p
+                c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.on,bk.to,bk.from from pos_pets p
                 join pos_pet_color c on p.pet_color =c.id
                 join bookings bk on p.pet_id =bk.pet_id
                 join pos_pet_breeds b on p.pet_breed=b.id

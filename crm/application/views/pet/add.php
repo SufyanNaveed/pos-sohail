@@ -7,13 +7,18 @@
             <div class="card card-block">
                 <div class="box-header with-border">
                 <h3 class="box-title">Pets</h3>
+                <div id="notify" class="alert alert-success" style="display:none;">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+
+        <div class="message"></div>
+    </div>
     <div class="card card-block">
-        <?php
+      
+
+    <?php
         $attributes = array('class' => 'card-body', 'id' => 'data_form');
         echo form_open_multipart('', $attributes);
         ?>
-
-
         <h5>Add new Pet</h5>
         <hr>
 
@@ -28,6 +33,7 @@
             </div>
         </div>
         <div class="form-group row">
+        <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 
             <label class="col-sm-2 col-form-label"
                    for="accno">Pet color</label>
