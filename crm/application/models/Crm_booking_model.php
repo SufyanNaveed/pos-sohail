@@ -56,23 +56,39 @@ class Crm_booking_model extends CI_Model
 
     public function addnew($data)
     {
-        if ($this->db->insert('bookings',$data)) {
-            // set flash data
-            $id = $this->db->insert_id  ();
-            $queueNO = date('my');
-        $queNO =  $queueNO.str_pad($id,3,0,STR_PAD_LEFT);
-        $data = [
-            'queue_no'=>$queNO
-        ];
-        $this->db->set($data)
-		->where('id', $id)
-		->update(' bookings');
-         $this->session->set_flashdata('success', 'Booking Scheduled Successfully'); 
-            redirect('/booking/schedule'); 
-        }else{
-            $this->session->set_flashdata('error', 'Error while adding booking'); 
+        // print_r($data['doctor_id']);exit;
+        $this->db->select('*');
+        $this->db->from('bookings');
+        $this->db->where(['doctor_id'=>$data['doctor_id'],'on'=>$data['on'],'from'=>$data['from'],'to'=>$data['to']]);
+        $query = $this->db->get();
+        $result  = $query->result_array();
+        if(!empty($result))
+        {
+            $this->session->set_flashdata('error', 'You cannot book against this time table'); 
             redirect('/booking/schedule');
         }
+        else{
+
+             $checkbooking = $this->db->select('*')->where(['doctor_id'=>$data['doctor_id']])->from('bookings');
+            echo "<pre>"; print_r($checkbooking);exit;
+             if ($this->db->insert('bookings',$data)) {
+                 // set flash data
+                 $id = $this->db->insert_id  ();
+                 $queueNO = date('my');
+             $queNO =  $queueNO.str_pad($id,3,0,STR_PAD_LEFT);
+             $data = [
+                 'queue_no'=>$queNO
+             ];
+             $this->db->set($data)
+             ->where('id', $id)
+             ->update(' bookings');
+              $this->session->set_flashdata('success', 'Booking Scheduled Successfully'); 
+                 redirect('/booking/schedule'); 
+             }else{
+                 $this->session->set_flashdata('error', 'Error while adding booking'); 
+                 redirect('/booking/schedule');
+             }
+            }
         // $pet_colorId = $this->db->insert_id();
         // $this->db->insert('pos_pet_breeds', ['title'=>$pet_breed]);
         // $breedId = $this->db->insert_id();

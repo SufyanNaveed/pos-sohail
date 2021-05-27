@@ -226,13 +226,14 @@ class Customers_model extends CI_Model
                 'discount_c' => $discount
             );
 
-
             if ($this->aauth->get_user()->loc) {
                 $data['loc'] = $this->aauth->get_user()->loc;
             }
-
+            // $this->db->insert('geopos_customers', $data);
+            // print_r($data);exit;
             if ($this->db->insert('geopos_customers', $data)) {
                 $cid = $this->db->insert_id();
+                // echo $cid;exit; 
                 $p_string = '';
                 $temp_password = '';
                 if ($create_login) {
@@ -255,7 +256,7 @@ class Customers_model extends CI_Model
                         'cid' => $cid,
                         'lang' => $language
                     );
-
+// print_r($data);exit;
                     $this->db->insert('users', $data);
                     $p_string = ' Temporary Password is ' . $temp_password . ' ';
                 }
