@@ -69,7 +69,7 @@ class Crm_booking_model extends CI_Model
         $result  = $query->result_array();
         if(!empty($result))
         {
-            $this->session->set_flashdata('error', 'You cannot book against this time table'); 
+            $this->session->set_flashdata('error', 'You cannot book against this time slot'); 
             redirect('/booking/schedule');
         }
         else{
