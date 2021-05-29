@@ -7,9 +7,9 @@ class Crm_pets_model extends CI_Model
 
     public function getPets()
     {
+
         //  $id = $this->input->get('id');
         // print_r($id);exit;
-        
         if($this->input->get('id')!=null ){
             $petId=$this->input->get('id');
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
@@ -23,6 +23,7 @@ class Crm_pets_model extends CI_Model
             $result = $this->db->query($sql);
         }else{
             $customerId = $this->session->userdata('user_details')[0]->cid;
+            // print_r($customerId);exit;
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
             c.title color, b.title pet_breed  , t.title pet_type 
             from pos_pets p
@@ -31,6 +32,7 @@ class Crm_pets_model extends CI_Model
             left join pos_pet_breeds b on p.pet_breed=b.id
             left join pos_pet_types t on p.pet_type =t.id where p.status<>0 and pcp.customer_id=".$customerId;
             $result = $this->db->query($sql);
+        //    echo "<pre>"; print_r($result);exit;
         }
         
         return $result;
@@ -65,13 +67,14 @@ class Crm_pets_model extends CI_Model
             
             $pet_id=$this->db->insert_id();
             $data=$this->session->userdata();
-            $customerId=$data['user_details'][0]->user_id;
+            // $customerId=$data['user_details'][0]->user_id;
+            $customerId = $this->session->userdata('user_details')[0]->cid;
             $this->db->insert('pos_customer_pets', ['customer_id'=>$customerId,"pet_id"=>$pet_id]);
 
             echo json_encode(array('status' => 'Success', 'message' =>
                 $this->lang->line('ADDED'). "  <a href='".base_url('pets/index')."' class='btn btn-blue btn-lg'><span class='fa fa-list-alt' aria-hidden='true'></span>  </a> <a href='add' class='btn btn-info btn-lg'><span class='fa fa-plus-circle' aria-hidden='true'></span>  </a>"));
         } else {
-            echo json_encode(array('status' => 'Error', 'message' =>
+            echo json_encode(array('status' => 'Error', 'm  essage' =>
                 $this->lang->line('ERROR')));
         }
 

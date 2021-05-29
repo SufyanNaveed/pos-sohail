@@ -13,6 +13,7 @@ class User_model extends CI_Model
      */
     function auth_user()
     {
+        
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         $this->db->where("is_deleted='0' AND (email='$email')");

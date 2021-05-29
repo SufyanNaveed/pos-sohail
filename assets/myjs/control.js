@@ -781,6 +781,7 @@ $("#submit-data2").on("click", function (e) {
 });
 
 function addObject(action, action_url) {
+
     var errorNum = farmCheck();
     var $btn;
     if ($("#notify").length == 0) {
@@ -794,10 +795,9 @@ function addObject(action, action_url) {
         jQuery.ajax({
             url: baseurl + action_url,
             type: 'POST',
-            data: action + '&' + crsf_token + '=' + crsf_hash,
+            data: action + '&' + crsf_token + '=' + crsf_hash,   
             dataType: 'json',
             success: function (data) {
-
                 if (data.status == "Success") {
                     $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
                     $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
@@ -808,6 +808,7 @@ function addObject(action, action_url) {
                     $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
                     $("html, body").scrollTop($("body").offset().top);
                 }
+
             },
             error: function (data) {
                 $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
