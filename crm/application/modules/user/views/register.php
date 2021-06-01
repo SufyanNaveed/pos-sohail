@@ -47,8 +47,8 @@
 
             </div>
 
-              <div class="form-group  has-feedback row"> <div class="col-md-6">   <input type="password" class="form-control" name="password_confirmation" placeholder="Password"
-                       data-validation="required" id="user-pass">
+              <div class="form-group  has-feedback row"> <div class="col-md-6">   
+                <span class="glyphicon glyphicon-user form-control-feedback"></span><input type="text" name="phone" class="form-control" data-validation="required" placeholder="Phone">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span></div>
 <div class="col-md-6">  <input type="text" name="country" class="form-control" data-validation="required" placeholder="Country">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span></div>
@@ -60,7 +60,7 @@
 
 
                 <div class="form-group  has-feedback row"> <div class="col-md-6">
-             <input type="password" name="password" class="form-control" placeholder="Retype password"
+             <input type="password" name="password" class="form-control" placeholder="password"
                        data-validation="confirmation" id="user-pass2">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
@@ -75,8 +75,7 @@
               <input type="text" name="address" class="form-control" data-validation="required" placeholder="Address">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
- <div class="col-md-6">  <input type="text" name="phone" class="form-control" data-validation="required" placeholder="Phone">
-                <span class="glyphicon glyphicon-user form-control-feedback"></span></div>
+ <div class="col-md-6">  </div>
 
             </div>
                                   
