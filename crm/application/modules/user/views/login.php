@@ -50,10 +50,16 @@
 
 
                                    
+                               <div class="row">
+                                   <div class="col-md-12 float-right mb-2">
+                                   <a href="<?php echo site_url(); ?>user/register" class="float-right">Register</a>
+                                   </div>
+                               </div>
                                     <button type="submit" class="btn btn-primary btn-lg btn-block"><i
                                                 class="icon-unlock2"></i> Login
                                     </button>
-                                </form> <?php    if ($this->common->front_end()->register) {
+                                </form> 
+                                <?php    if ($this->common->front_end()->register) {
         ?> <br> <div class="row"><span class="col-xs-7"><a
                                                     href="<?php echo base_url('user/registration'); ?>" class="card-link">
                                                <?php echo $this->lang->line('Register')  ?></a></span><span class="col-xs-5"><a

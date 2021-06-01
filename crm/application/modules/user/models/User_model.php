@@ -88,7 +88,120 @@ class User_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0)
+    {
+        $this->db->select('email');
+        $this->db->from('geopos_customers');
+        $this->db->where('email', $email);
+        $query = $this->db->get();
+        $valid = $query->row_array();
+        // if (!$valid['email']) {
 
+
+            if (!$discount) {
+                $this->db->select('disc_rate');
+                $this->db->from('geopos_cust_group');
+                $this->db->where('id', $customergroup);
+                $query = $this->db->get();
+                $result = $query->row_array();
+                $discount = $result['disc_rate'];
+            }
+
+
+            $data = array(
+                'name' => $name,
+                'company' => $company,
+                'phone' => $phone,
+                'email' => $email,
+                'address' => $address,
+                'city' => $city,
+                'region' => $region,
+                'country' => $country,
+                'postbox' => $postbox,
+                'gid' => $customergroup,
+                'taxid' => $taxid,
+                'name_s' => $name_s,
+                'phone_s' => $phone_s,
+                'email_s' => $email_s,
+                'address_s' => $address_s,
+                'city_s' => $city_s,
+                'region_s' => $region_s,
+                'country_s' => $country_s,
+                'postbox_s' => $postbox_s,
+                'docid' => $docid,
+                'custom1' => $custom,
+                'discount_c' => $discount
+            );
+          
+            // print_r($data);exit;
+            // if ($this->aauth->get_user()->loc) {
+            //     $data['loc'] = $this->aauth->get_user()->loc;
+            // }
+            // $this->db->insert('geopos_customers', $data);
+            // print_r($data);exit;
+            if ($this->db->insert('geopos_customers', $data)) {
+                $cid = $this->db->insert_id();
+                // print_r($cid);exit;
+                // echo $cid;exit; 
+                $p_string = '';
+                $temp_password = '';
+                // if ($create_login) {
+
+                    if ($password) {
+                        $temp_password = $password;
+                    } else {
+                        $temp_password = rand(200000, 999999);
+                    }
+
+                    $pass = password_hash($temp_password, PASSWORD_DEFAULT);
+                    $data = array(
+                        'user_id' => 1,
+                        'status' => 'active',
+                        'is_deleted' => 0,
+                        'name' => $name,
+                        'password' => $pass,
+                        'email' => $email,
+                        'user_type' => 'Member',
+                        'cid' => $cid,
+                        'lang' => 'english'
+                    );
+                    // print_r($data);exit;
+// print_r($data);exit;
+                    $this->db->insert('users', $data);
+                    $p_string = ' Temporary Password is ' . $temp_password . ' ';
+                // }
+                // $this->aauth->applog("[Client Added] $name ID " . $cid, $this->aauth->get_user()->username);
+                // echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('ADDED') . $p_string . '&nbsp;<a href="' . base_url('customers/view?id=' . $cid) . '" class="btn btn-info btn-sm"><span class="icon-eye"></span>' . $this->lang->line('View') . '</a>', 'cid' => $cid, 'pass' => $temp_password, 'discount' => amountFormat_general($discount)));
+
+                // $this->custom->save_fields_data($cid, 1);
+
+                // $this->db->select('other');
+                // $this->db->from('univarsal_api');
+                // $this->db->where('id', 64);
+                // $query = $this->db->get();
+                // $othe = $query->row_array();
+
+                // if ($othe['other']) {
+                //     $auto_mail = $this->send_mail_auto($email, $name, $temp_password);
+                //     $this->load->model('communication_model');
+                //     $attachmenttrue = false;
+                //     $attachment = '';
+                //     $this->communication_model->send_corn_email($email, $name, $auto_mail['subject'], $auto_mail['message'], $attachmenttrue, $attachment);
+                // }
+                return true;
+
+            } else {
+                echo json_encode(array('status' => 'Error', 'message' =>
+                    $this->lang->line('ERROR')));
+            }
+        // } else {
+        //     $this->session->set_flashdata('messagePr', 'All fields are required!');
+		// 	redirect('User/register'); 
+        //     // echo json_encode(array('status' => 'Error', 'message' =>
+        //     //     'Duplicate Email'));
+        // }
+
+    }
     /**
      * This function is used to check user is alredy exist or not
      */

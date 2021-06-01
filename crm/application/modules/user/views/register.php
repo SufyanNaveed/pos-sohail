@@ -25,7 +25,7 @@
                                         <?php echo $this->session->flashdata("messagePr") ?>
                                     </div>
                                 <?php } ?>
-        <form action="<?php echo base_url() . 'user/registration'; ?>" method="post">
+        <form action="<?php echo base_url() . 'user/registerCustomer'; ?>" method="post">
 
             <div class="form-group  has-feedback row">
                 <div class="col-md-6"><input type="text" name="name" class="form-control" data-validation="required" placeholder="<?php echo $this->lang->line('Name')  ?> ">
@@ -79,31 +79,8 @@
                 <span class="glyphicon glyphicon-user form-control-feedback"></span></div>
 
             </div>
-                                   <?php
-                                   if($custom_fields) {
-                                       echo '<div class="form-group row">';
-                                       $r=0;
-                                       foreach ($custom_fields as $row) {
-                                           if ($row['f_type'] == 'text') { ?>
-
-
-                                               <div class="col-sm-6">
-                                                   <input type="text" placeholder="<?= $row['placeholder'] ?>"
-                                                          class="form-control margin-bottom b_input <?= $row['other'] ?>"
-                                                          name="custom[<?= $row['id'] ?>]">
-                                               </div>
-
-
-                                           <?php
-                                            $r++;
-                                            if($r%2==0)  echo '</div><div class="form-group row">';
-                                           }
-                                       }
-                                       echo '</div>';
-                                   }
-                                ?>
+                                  
             <div class="form-group  has-feedback row">
-                <div class="col-md-6">  <select class="form-control" name="lang" ><?= $langs ?></select> </div>
                 <div class="col-md-6">
                 <button type="submit" name="submit" class="btn btn-primary btn-block btn-flat btn-color"><?php echo $this->lang->line('Register')  ?>
                     </button>

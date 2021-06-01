@@ -14,6 +14,8 @@ class User extends CI_Controller
         $this->user_id = isset($this->session->get_userdata()['user_details'][0]->id) ? $this->session->get_userdata()['user_details'][0]->users_id : '1';
          $this->load->library("Common");
          $this->load->library("Custom");
+        // $this->load->model('customers_model', 'customers');
+
 
     }
 
@@ -27,6 +29,7 @@ class User extends CI_Controller
             redirect(base_url() . 'invoices', 'refresh');
         }
     }
+
 
     /**
      * This function is used to load login view page
@@ -49,6 +52,14 @@ class User extends CI_Controller
         $this->load->view('login', $data);
         $this->load->view('footer');
     }
+    public function register()
+    {
+        $this->load->view('header');
+
+        $this->load->view('register');
+        $this->load->view('footer');
+
+    }
 
     /**
      * This function is used to logout user
@@ -65,27 +76,85 @@ class User extends CI_Controller
      * This function is used to registr user
      * @return Void
      */
-    public function registration()
+    // public function registration()
+    // {
+    //     if (isset($_SESSION['user_details'])) {
+    //         redirect(base_url() . 'user/profile', 'refresh');
+    //     }
+
+    //     if ($this->common->front_end()->register) {
+    //         //Check if admin allow to registration for user
+    //         // if (setting_all('register_allowed') == 1) {
+    //         if ($this->input->post()) {
+    //             $this->add_edit();
+    //             $this->session->set_flashdata('messagePr', 'Successfully Registered..');
+    //         } else {
+    //             $this->load->view('header');
+    //             $this->load->view('register', array('langs' => $this->common->languages(),'custom_fields' => $this->custom->add_fields(1,1)));
+
+    //         }
+    //     } else {
+    //         $this->session->set_flashdata('messagePr', 'Registration Not allowed..');
+    //         redirect(base_url() . 'user/login', 'refresh');
+    //     }
+
+    // }
+    public function registerCustomer()
     {
-        if (isset($_SESSION['user_details'])) {
-            redirect(base_url() . 'user/profile', 'refresh');
+        $this->load->library('form_validation');
+        $this->load->helper('Security');
+
+        $validation = $this->form_validation;
+		$validation->set_rules('name', 'User Name', 'required|xss_clean|max_length[20]');
+		$validation->set_rules('email', 'User Email', 'required|xss_clean');
+		$validation->set_rules('region', 'User Region', 'required|xss_clean');
+		$validation->set_rules('password', 'User Password', 'required|xss_clean');
+		$validation->set_rules('postbox', 'User Postbox', 'required|xss_clean');
+		$validation->set_rules('phone', 'User phone', 'required|xss_clean');
+        if ($validation->run() == FALSE) {
+			$this->session->set_flashdata('messagePr', 'All fields are required!');
+			redirect('User/register'); 
+
+		} 
+        else{
+            $name = $this->input->post('name', true);
+            // print_r($name);exit;
+            $company = $this->input->post('company', true);
+            $phone = $this->input->post('phone', true);
+            $email = $this->input->post('email', true);
+            $address = $this->input->post('address', true);
+            $city = $this->input->post('city', true);
+            $region = $this->input->post('region', true);
+            $country = $this->input->post('country', true);
+            $postbox = $this->input->post('postbox', true);
+            $taxid = $this->input->post('taxid', true);
+            $customergroup = $this->input->post('customergroup');
+            $name_s = $this->input->post('name_s', true);
+            $phone_s = $this->input->post('phone_s', true);
+            $email_s = $this->input->post('email_s', true);
+            $address_s = $this->input->post('address_s', true);
+            $city_s = $this->input->post('city_s', true);
+            $region_s = $this->input->post('region_s', true);
+            $country_s = $this->input->post('country_s', true);
+            $postbox_s = $this->input->post('postbox_s', true);
+            $language = $this->input->post('language', true);
+            $create_login = $this->input->post('c_login', true);
+            $password = $this->input->post('password', true);
+            $docid = $this->input->post('docid', true);
+            $custom = $this->input->post('c_field', true);
+            $discount = $this->input->post('discount', true);
+            $id = $this->User_model->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount);
+           if(!empty($id))
+           {
+            $this->session->set_flashdata('messagePr', 'Registered Successfully!!');
+			redirect('User/login'); 
+           }
+           else{
+            $this->session->set_flashdata('messagePr', 'Something Wrong!!');
+			redirect('User/login');
+           }
         }
 
-        if ($this->common->front_end()->register) {
-            //Check if admin allow to registration for user
-            // if (setting_all('register_allowed') == 1) {
-            if ($this->input->post()) {
-                $this->add_edit();
-                $this->session->set_flashdata('messagePr', 'Successfully Registered..');
-            } else {
-                $this->load->view('header');
-                $this->load->view('register', array('langs' => $this->common->languages(),'custom_fields' => $this->custom->add_fields(1,1)));
-
-            }
-        } else {
-            $this->session->set_flashdata('messagePr', 'Registration Not allowed..');
-            redirect(base_url() . 'user/login', 'refresh');
-        }
 
     }
 
