@@ -63,8 +63,8 @@
                     <td>$row->pet_breed</td>
                     <td>$row->pet_type</td>
                     <td>$row->on</td>
-                    <td>$row->from</td>
-                    <td>$row->to</td>
+                    <td>".date('h.i A', strtotime($row->from))."</td>
+                    <td>".date('h.i A', strtotime($row->to))."</td>
                     </tr>";
                         $i++;
                     }
