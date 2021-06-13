@@ -109,4 +109,16 @@ class Pets extends CI_Controller{
         $this->load->view('fixed/footer');
     }
 
+    public function detail()
+    {
+        $booking_id = $this->uri->segment(3);
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Medical Detail';
+        $this->load->view('fixed/header', $head);
+        $data['pet_detail'] =$this->pets->getMedicalDetail($booking_id);
+        // echo "<pre>"; print_r($data['pet_detail']);exit;
+        $this->load->view('appointments/detail',$data);
+        $this->load->view('fixed/footer');
+    }
+
 }

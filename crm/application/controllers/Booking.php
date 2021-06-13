@@ -17,7 +17,6 @@ class Booking extends CI_Controller{
     }
     public function schedule()
     {
-        // echo "<pre>";print_r($this->session->userdata());exit; 
         $head['usernm'] = $this->session->userdata()->username;
         $data['pets']=$this->booking->getPets()->result();
         $data['doctors']=$this->booking->getDoctors()->result();
@@ -101,7 +100,49 @@ class Booking extends CI_Controller{
         if(isset($userData[0])){
             $data['user_id']=$userData[0]->user_id;
         }
-       return $this->booking->addnew($data);
+        $booking_id = $this->booking->addnew($data);
+
+        $detail = [];
+        $detail['booking_id'] = $booking_id;
+        $detail['no'] = trim($_POST['no']);
+        $detail['gastrointestinal_prob'] = $this->multipleCheckboxCheck(isset($_POST['gastrointestinal_prob']) ? $_POST['gastrointestinal_prob'] : false);
+        $detail['stool_nature']         = $this->multipleCheckboxCheck(isset($_POST['stool_nature']) ? $_POST['stool_nature'] : false);
+        $detail['stool_color']          = $this->multipleCheckboxCheck(isset($_POST['stool_color']) ? $_POST['stool_color'] : false);
+        $detail['urine_color']          = $this->multipleCheckboxCheck(isset($_POST['urine_color']) ? $_POST['urine_color'] : false);
+        $detail['eye_problems']         = $this->multipleCheckboxCheck(isset($_POST['eye_problems']) ? $_POST['eye_problems'] : false);
+        $detail['current_symptoms']     = $this->multipleCheckboxCheck(isset($_POST['current_symptoms']) ? $_POST['current_symptoms'] : false);
+        $detail['pulmonary_problems']   = $this->multipleCheckboxCheck(isset($_POST['pulmonary_problems']) ? $_POST['pulmonary_problems'] : false);
+        $detail['mouth_teeth_problems'] = $this->multipleCheckboxCheck(isset($_POST['mouth_teeth_problems']) ? $_POST['mouth_teeth_problems'] : false);
+        $detail['general_q4']           = $this->multipleCheckboxCheck(isset($_POST['general_q4']) ? $_POST['general_q4'] : false);
+        $detail['med_bck_q1']           = trim($_POST['med_bck_q1']);
+        $detail['med_bck_q2']           = trim($_POST['med_bck_q2']);
+        $detail['med_bck_q2_specify']   = trim($_POST['med_bck_q2_specify']);
+        $detail['med_and_vac_q1']       = trim($_POST['med_and_vac_q1']);
+        $detail['med_and_vac_q2']       = trim($_POST['med_and_vac_q2']);
+        $detail['general_q1']           = trim($_POST['general_q1']);
+        $detail['general_q2']           = trim($_POST['general_q2']);
+        $detail['general_q3']           = trim($_POST['general_q3']);
+        $detail['general_q3_specify']   = trim($_POST['general_q3_specify']);
+        $detail['general_q5']           = trim($_POST['general_q5']);
+        $detail['general_q6']           = trim($_POST['general_q6']);
+        $detail['general_q7']           = trim($_POST['general_q7']);
+        $detail['general_q8']           = trim($_POST['general_q8']);
+        $detail['general_q9']           = trim($_POST['general_q9']);
+        $detail['general_q9_specify']   = trim($_POST['general_q9_specify']);
+
+        return $this->booking->add_pet_detail($detail);
+    }
+
+    public function multipleCheckboxCheck($val)
+    {
+        if(!$val)
+        {
+            return '';
+        }
+        else
+        {
+            return implode('@@', $val);
+        }
     }
 
 }

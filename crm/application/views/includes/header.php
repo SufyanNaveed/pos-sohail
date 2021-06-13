@@ -45,6 +45,9 @@
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="<?php echo assets_url(); ?>/crm-assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="<?php echo assets_url(); ?>/crm-assets/css/custom.css">
+
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_dots.min.css" rel="stylesheet" type="text/css" />
     <!-- END Custom CSS-->
     <script src="<?php echo assets_url(); ?>crm-assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo assets_url(); ?>crm-assets/vendors/js/ui/tether.min.js" type="text/javascript"></script>
@@ -58,6 +61,7 @@
     <script src="<?php echo assets_url('crm-assets/js/custom.js'); ?>"></script>
     <script src='<?php echo assets_url("crm-assets/js/moment.min.js")?>'></script>
     <script src='<?php echo assets_url("crm-assets/js/fullcalendar.min.js")?>'></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.smartWizard.min.js"></script>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
       class="vertical-layout vertical-menu 2-columns  fixed-navbar  menu-expanded">

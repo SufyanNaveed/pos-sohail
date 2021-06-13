@@ -48,12 +48,12 @@
                     $i = 1;
                     // foreach (Bookings($did) as $booking) {
                     foreach ($pets as $row) {
-                        $pid = $row->id;
-                        $total = $row->pet_color;
+                        $pid   = $row->id;
+                        //$total = $row->pet_color;
                     // if($pid==$booking->pet_id){
                         echo "<tr>
                     <td>$i</td>
-                    <td>$row->queue_no</td>
+                    <td>$row->queue_no <a href='".base_url()."pets/detail/".$row->booking_id."'>Detail</a></td>
                     <td>$row->pet_name</td>
                     <td><img class='round' src='".base_url()."userfiles/pet/". $row->pet_photo."' style='max-height: 100%;max-width: 100%'></td>
                     <td>$row->color</td>

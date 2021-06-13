@@ -40,7 +40,7 @@ class Pos_pets_model extends CI_Model
 
             $petId=$this->input->get('id');
             $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-            c.title color, b.title pet_breed , t.title pet_type ,bk.queue_no,bk.on,bk.to,bk.from
+            c.title color, b.title pet_breed , t.title pet_type ,bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id
             from pos_pets p
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_pet_breeds b on p.pet_breed=b.id
@@ -72,7 +72,7 @@ if($roleId == 6)
             {
                     // echo "yes";exit;
             $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-            c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.queue_no,bk.on,bk.to,bk.from from pos_pets p
+            c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id from pos_pets p
             join pos_pet_color c on p.pet_color =c.id
             join bookings bk on p.pet_id =bk.pet_id
             join pos_pet_breeds b on p.pet_breed=b.id
@@ -83,7 +83,7 @@ if($roleId == 6)
             else{
                 // echo "yes";exit;
                 $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-                c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.on,bk.to,bk.from from pos_pets p
+                c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id from pos_pets p
                 join pos_pet_color c on p.pet_color =c.id
                 join bookings bk on p.pet_id =bk.pet_id
                 join pos_pet_breeds b on p.pet_breed=b.id
@@ -95,6 +95,14 @@ if($roleId == 6)
         }
         
         return $result;
+    }
+
+    public function getMedicalDetail($booking_id)
+    {
+        $this->db->select('*');
+        $this->db->from('pos_pet_medical_detail');
+        $this->db->where('booking_id', $booking_id);
+        return $this->db->get()->row_array();
     }
 
     public function addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo)

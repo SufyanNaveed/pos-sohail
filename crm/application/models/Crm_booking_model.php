@@ -88,8 +88,9 @@ class Crm_booking_model extends CI_Model
                 $this->db->set($data)
              ->where('id', $id)
              ->update(' bookings');
-                $this->session->set_flashdata('success', 'Booking Scheduled Successfully');
-                redirect('/booking/schedule');
+                // $this->session->set_flashdata('success', 'Booking Scheduled Successfully');
+                // redirect('/booking/schedule');
+                return $id;
             } else {
                 $this->session->set_flashdata('error', 'Error while adding booking');
                 redirect('/booking/schedule');
@@ -129,6 +130,20 @@ class Crm_booking_model extends CI_Model
         //         $this->lang->line('ERROR')));
         // }
 
+    }
+
+    public function add_pet_detail($data)
+    {
+        if($this->db->insert('pos_pet_medical_detail', $data))
+        {
+            $this->session->set_flashdata('success', 'Booking Scheduled Successfully');
+            redirect('/booking/schedule');
+        }
+        else
+        {
+            $this->session->set_flashdata('error', 'Error while adding booking');
+            redirect('/booking/schedule');
+        }
     }
 
     

@@ -936,3 +936,4 @@ $lang['DOB'] = "DOB";
 $lang['Microchip #'] = "Microchip #";
 $lang['Mark Difference'] = "Mark Difference";
 $lang['Breed'] = "Breed";
+$lang['Medical Detail'] = "Medical Detail";
