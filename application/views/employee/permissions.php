@@ -38,6 +38,7 @@
                             <th><?php echo $this->lang->line('Business Manager') ?></th>
                             <th><?php echo $this->lang->line('Business Owner') ?></th>
                             <th><?php echo $this->lang->line('Doctor') ?></th>
+                            <th><?php echo $this->lang->line('Receptionist') ?></th>
 
 
                         </tr>
@@ -65,7 +66,8 @@
                                        class="m-1" <?php if ($row['r_5']) echo 'checked="checked"' ?>></td>
                             <td><input type="checkbox" name="r_<?= $i ?>_6"
                                        class="m-1" <?php if ($row['r_6']) echo 'checked="checked"' ?>></td>
-                            <?php
+                            <td><input type="checkbox" name="r_<?= $i ?>_9"
+                                       class="m-1" <?php if ($row['r_9']) echo 'checked="checked"' ?>></td>                            <?php
                             echo "
                     </tr>";
                             //  $i++;
@@ -82,6 +84,7 @@
                             <th><?php echo $this->lang->line('Business Manager') ?></th>
                             <th><?php echo $this->lang->line('Business Owner') ?></th>
                             <th><?php echo $this->lang->line('Doctor') ?></th>
+                            <th><?php echo $this->lang->line('Receptionist') ?></th>
 
                         </tr>
                         </tfoot>

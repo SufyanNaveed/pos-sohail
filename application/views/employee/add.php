@@ -63,6 +63,7 @@
                             <option value="1">< ?= $this->lang->line('Inventory Manager') ?></option>
                             <option value="-1">< ?= $this->lang->line('Project Manager') ?></option> -->
                             <option value="6"><?= $this->lang->line('Doctor') ?></option>
+                            <option value="9"><?= $this->lang->line('Receptionist') ?></option>
                         </select>
                     </div>
                 </div>

@@ -17,7 +17,7 @@ class Booking extends CI_Controller{
     }
     public function schedule()
     {
-        $head['usernm'] = $this->session->userdata()->username;
+        // $head['usernm'] = $this->session->userdata()->username;
         $data['pets']=$this->booking->getPets()->result();
         $data['doctors']=$this->booking->getDoctors()->result();
         $head['title'] = 'Booking-Schedule';

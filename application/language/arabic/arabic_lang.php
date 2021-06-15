@@ -968,3 +968,4 @@ $lang['delete this batch'] = "هل أنت متأكد أنك تريد حذف هذ
 $lang['Dead'] = "في ذمة الله تعالى";
 $lang['Sold'] = "مباع";
 $lang['Per Item Daily Feed'] = "تغذية يومية لكل عنصر";
+$lang['Receptionist'] = "موظف الإستقبال";
