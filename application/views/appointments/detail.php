@@ -1,5 +1,70 @@
 <div class="content-body">
 	<a class="btn btn-primary mb-1 text-white" href="<?php echo base_url().'pets/appointments' ?>">Back</a>
+	<?php
+	if(!empty($pet_detail))
+	{
+	?>
+		<div class="card">
+			<form id="reception_form" action="<?=base_url().'pets/update_receptionist'?>" method="post">
+				<div class="card-header">
+					<h5 class="title">Receptionist Detail</h5>
+				</div>
+				<div class="card-content">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-6">
+								<label><strong>Blood Pressure</strong></label>
+								<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
+								<input type="text" class="form-control" name="blood_pressure" value="<?=$pet_detail['blood_pressure']?>">
+							</div>
+							<div class="col-md-6">
+								<input type="hidden" name="id" value="<?=$pet_detail['id']?>">
+								<input type="hidden" name="booking_id" value="<?=$pet_detail['booking_id']?>">
+								<label><strong>Temprature</strong></label>
+								<input type="radio" name="temp_type" value="celsius"
+								<?php
+								if($pet_detail['temp_type'] == '')
+								{
+									echo 'checked';
+								}
+								else if($pet_detail['temp_type'] == 'celsius')
+								{
+									echo 'checked';
+								}
+								else
+								{
+									echo '';
+								}
+								?>
+								> Celsius
+								<input type="radio" name="temp_type" value="fahrenheit"
+								<?php
+								if($pet_detail['temp_type'] == 'fahrenheit')
+								{
+									echo 'checked';
+								}
+								?>
+								> Fahrenheit
+								<input type="number" class="form-control" name="temperature" value="<?=$pet_detail['temperature']?>">
+							</div>
+							<?php
+							if($this->aauth->get_user()->roleid == 9)
+							{
+							?>
+								<div class="col-md-12">
+									<input type="submit" class="btn btn-primary mt-1 float-right" value="Update">
+								</div>
+							<?php
+							}
+							?>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	<?php
+	}
+	?>
 	<div class="card">
 		<div class="card-header">
 			<h5 class="title">

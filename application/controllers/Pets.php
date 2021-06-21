@@ -116,9 +116,26 @@ class Pets extends CI_Controller{
         $head['title'] = 'Medical Detail';
         $this->load->view('fixed/header', $head);
         $data['pet_detail'] =$this->pets->getMedicalDetail($booking_id);
+        $data['staging_status'] = $this->pets->getStagingStatus($booking_id);
         // echo "<pre>"; print_r($data['pet_detail']);exit;
         $this->load->view('appointments/detail',$data);
         $this->load->view('fixed/footer');
+    }
+
+    public function update_receptionist()
+    {
+        $data = 
+        [
+            'blood_pressure' => $this->input->post('blood_pressure'),
+            'temp_type' => $this->input->post('temp_type'),
+            'temperature' => $this->input->post('temperature')
+        ];
+
+        if($this->pets->update_receprionist($data, $this->input->post('id'), $this->input->post('booking_id')))
+        {
+            $this->session->set_flashdata('success_receptionist', 'Success');
+            redirect(base_url().'pets/appointments');
+        }
     }
 
 }

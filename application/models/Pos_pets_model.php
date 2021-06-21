@@ -76,18 +76,27 @@ if($roleId == 6)
             join pos_pet_color c on p.pet_color =c.id
             join bookings bk on p.pet_id =bk.pet_id
             join pos_pet_breeds b on p.pet_breed=b.id
-            join pos_pet_types t on p.pet_type =t.id where p.status<>0 and bk.doctor_id=".$did;
+            join pos_pet_types t on p.pet_type =t.id where p.status<>0 and bk.staging_status = 'doctor' and bk.doctor_id=".$did;
             
        
         }
-            else{
+    else if($roleId == 9)
+    {
+                $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+                c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id from pos_pets p
+                join pos_pet_color c on p.pet_color =c.id
+                join bookings bk on p.pet_id =bk.pet_id
+                join pos_pet_breeds b on p.pet_breed=b.id
+                join pos_pet_types t on p.pet_type =t.id  where p.status<>0 and bk.staging_status = 'receptionist'";        
+    }
+    else{
                 // echo "yes";exit;
                 $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
                 c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id from pos_pets p
                 join pos_pet_color c on p.pet_color =c.id
                 join bookings bk on p.pet_id =bk.pet_id
                 join pos_pet_breeds b on p.pet_breed=b.id
-                join pos_pet_types t on p.pet_type =t.id where p.status<>0";
+                join pos_pet_types t on p.pet_type =t.id  where p.status<>0";
             }
             // left join pos_pet_mark_difference m on p.mark_difference =m.id;
 // echo "<pre>";print_r($sql);exit;
@@ -103,6 +112,14 @@ if($roleId == 6)
         $this->db->from('pos_pet_medical_detail');
         $this->db->where('booking_id', $booking_id);
         return $this->db->get()->row_array();
+    }
+
+    public function getStagingStatus($booking_id)
+    {
+        $this->db->select('staging_status');
+        $this->db->from('bookings');
+        $this->db->where('id', $booking_id);
+        return $this->db->get()->row()->staging_status;
     }
 
     public function addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo)
@@ -196,6 +213,24 @@ if($roleId == 6)
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('ERROR')));
+        }
+
+    }
+
+    public function update_receprionist($data, $id, $booking_id)
+    {
+        $this->db->where('id', $id);
+        if($this->db->update('pos_pet_medical_detail', $data))
+        {
+            $data_rec = 
+            [
+                'staging_status' => 'doctor'
+            ];
+            $this->db->where('id', $booking_id);
+            if($this->db->update('bookings', $data_rec))
+            {
+                return true;
+            }
         }
 
     }
