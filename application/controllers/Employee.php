@@ -144,8 +144,7 @@ class Employee extends CI_Controller
             $this->form_validation->set_rules('speciality_data[]', 'Speciality', 'required');
         }
         
-
-        if($this->form_validation->run()===false){
+         if($this->form_validation->run() == false && $roleid_post == 6){
             echo json_encode(array('status' => 'Error', 'message' =>
                 'Speciality is required.'));
         }else{
@@ -155,9 +154,12 @@ class Employee extends CI_Controller
                 $nuid = (string)$this->aauth->get_user($a)->id;
                 if ($nuid > 0) {
                     $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department,$whatsapp_link);
-                    $d=$this->storeSpeciality($nuid,$speciality_data);
-                    $avail=$this->storeAvailability($nuid,$this->input->post());
-                }
+                   	
+                   	if($roleid_post == 6){ 
+                    	$d=$this->storeSpeciality($nuid,$speciality_data);
+                    	$avail=$this->storeAvailability($nuid,$this->input->post());
+               	 	}
+               	}
     
             } else {
                 echo json_encode(array('status' => 'Error', 'message' =>
@@ -219,14 +221,14 @@ class Employee extends CI_Controller
         $temp['to']=$posted['sat_to'];
         $temp['advisor_id']=$userId;
         $temp['time']='morning';
-        $temp['is_available']=$posted['sat_availability']=='on' ? 1 : 0;
+        $temp['is_available']= isset($posted['sat_availability']) AND $posted['sat_availability'] =='on' ? 1 : 0;
         $data[]=$temp;
         $temp['day']='sunday';
         $temp['from']=$posted['sun_from'];
         $temp['to']=$posted['sun_to'];
         $temp['advisor_id']=$userId;
         $temp['time']='morning';
-        $temp['is_available']=$posted['sun_availability']=='on' ? 1 : 0;
+        $temp['is_available']=isset($posted['sun_availability']) AND  $posted['sun_availability']=='on' ? 1 : 0;
         $data[]=$temp;
 
         //evening
@@ -270,14 +272,14 @@ class Employee extends CI_Controller
         $temp['to']=$posted['sat_to_ev'];
         $temp['advisor_id']=$userId;
         $temp['time']='evening';
-        $temp['is_available']=$posted['sat_availability_ev']=='on' ? 1 : 0;
+        $temp['is_available']= isset($posted['sat_availability_ev']) AND  $posted['sat_availability_ev']=='on' ? 1 : 0;
         $data[]=$temp;
         $temp['day']='sunday';
         $temp['from']=$posted['sun_from_ev'];
         $temp['to']=$posted['sun_to_ev'];
         $temp['advisor_id']=$userId;
         $temp['time']='evening';
-        $temp['is_available']=$posted['sun_availability_ev']=='on' ? 1 : 0;
+        $temp['is_available']= isset($posted['sun_availability_ev']) AND $posted['sun_availability_ev']=='on' ? 1 : 0;
         $data[]=$temp;
 
         return $this->doctor->addAvailability($data);

@@ -43,8 +43,7 @@
                     <label class="col-sm-2 col-form-label" for="currency">License</label>
 
                     <div class="col-sm-6">
-                        <p>Single Use Standard License. Read The Full License Here <a
-                                    href="https://codecanyon.net/licenses/standard">https://codecanyon.net/licenses/standard</a>.
+                        <p>Single Use Standard License. Read The Full License Here 
                             You can not activate the application on multiple domains with single key.
                         </p>
                     </div>

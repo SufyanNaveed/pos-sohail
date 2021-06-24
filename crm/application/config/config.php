@@ -24,7 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'http://localhost/devpos/crm/';
+//$config['base_url'] = 'http://localhost/devpos/crm/';
+$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/devpos/crm/';
 
 /*
 |--------------------------------------------------------------------------

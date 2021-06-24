@@ -24,8 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'http://localhost/devpos';
-// $config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/pos/';
+//$config['base_url'] = 'http://localhost/devpos';
+$config['base_url'] = 'http://'.$_SERVER['HTTP_HOST'].'/devpos/';
 
 /*
 |--------------------------------------------------------------------------
