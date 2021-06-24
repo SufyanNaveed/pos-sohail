@@ -55,7 +55,7 @@
                            for="name"><?php echo $this->lang->line('UserRole') ?></label>
 
                     <div class="col-sm-5">
-                        <select name="roleid" class="form-control margin-bottom">
+                        <select name="roleid" class="form-control margin-bottom" onchange="set_form(this.value);">
                             <!-- <option value="4">< ? = $this->lang->line('Business Manager') ?></option>
                             <option value="3">< ? = $this->lang->line('Sales Manager') ?></option>
                             <option value="5">< ?= $this->lang->line('Business Owner') ?></option>
@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row" id="speciality_area">
                 <label class="col-sm-2 col-form-label"
                 for="speciality">speciality(s)</label>
                 <div class="col-sm-10">
@@ -125,8 +125,10 @@ th,td{
     padding: 15px;
 }
 </style>
+<div id="avail_txt">
 Availability(s)
-            <div class="form-group row">
+</div>
+            <div class="form-group row" id="avail_area">
                 <label class="col-sm-1 col-form-label"
                 for="whatsapp_link">1<sup>st</sup> Shift </label>
                 <div class="col-sm-5">
@@ -442,4 +444,21 @@ Availability(s)
 
 
     }
+
+    const set_form = check => 
+    {
+        if(check == 9)
+        {
+            $('#speciality_area').hide();
+            $('#avail_area').hide();
+            $('#avail_txt').hide();
+        }
+        else
+        {
+            $('#speciality_area').show();
+            $('#avail_area').show();
+            $('#avail_txt').show();   
+        }
+    }
+
 </script>

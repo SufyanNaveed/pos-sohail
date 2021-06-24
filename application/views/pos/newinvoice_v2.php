@@ -876,7 +876,8 @@
         }
         ?>
         $('#b_total').html(' <?= $this->config->item('currency'); ?> ' + accounting.formatNumber(roundoff));
-        $('#p_amount').val(accounting.formatNumber(roundoff));
+        $('#p_amount').val(0);
+        $('#balance1').val(accounting.formatNumber(roundoff));
     });
 
     function update_pay_pos() {

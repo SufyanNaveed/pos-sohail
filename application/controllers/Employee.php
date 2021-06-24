@@ -123,6 +123,7 @@ class Employee extends CI_Controller
             }
         }
 
+        $roleid_post = $this->input->post('roleid');
         $location = $this->input->post('location', true);
         $name = $this->input->post('name', true);
         $phone = $this->input->post('phone', true);
@@ -138,10 +139,13 @@ class Employee extends CI_Controller
         $whatsapp_link = $this->input->post('whatsapp_link', true);
         $speciality_data = $this->input->post('speciality_data', true);
 
-        $this->form_validation->set_rules('speciality_data[]', 'Speciality', 'required');
+        if($roleid_post == 6)
+        {
+            $this->form_validation->set_rules('speciality_data[]', 'Speciality', 'required');
+        }
         
 
-        if($this->form_validation->run()==false){
+        if($this->form_validation->run()===false){
             echo json_encode(array('status' => 'Error', 'message' =>
                 'Speciality is required.'));
         }else{

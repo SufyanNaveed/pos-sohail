@@ -114,15 +114,6 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
-							<div class="row">
-								<div class="col-md-6 text-center"> 
-									<strong><span>Gastrointestinal Problems?</span></strong>
-								</div>
-								<div class="col-md-6 text-center">
-									<strong><span>مشاكل الجهاز الهضمي؟</span></strong>
-								</div>
-							</div>
 							<?php
 							$gastrointestinal_prob = explode('@@', $pet_detail['gastrointestinal_prob']);
 							$stool_nature = explode('@@', $pet_detail['stool_nature']);
@@ -134,6 +125,23 @@
 							$mouth_teeth_problems = explode('@@', $pet_detail['mouth_teeth_problems']);
 							$general_q4 = explode('@@', $pet_detail['general_q4']);
 							?>
+						<div class="col-md-6">
+							<?php
+							if(!empty($pet_detail['gastrointestinal_prob']))
+							{
+							?>
+							<div class="row">
+								<div class="col-md-6 text-center"> 
+									<strong><span>Gastrointestinal Problems?</span></strong>
+								</div>
+								<div class="col-md-6 text-center">
+									<strong><span>مشاكل الجهاز الهضمي؟</span></strong>
+								</div>
+							</div>
+							<?php
+							if(in_array('vomiting', $gastrointestinal_prob))
+							{
+							?> 
 							<div class="row">
 								<div class="col-md-5 text-center">Vomiting</div>
 								<div class="col-md-2 text-center">
@@ -151,6 +159,11 @@
 								</div>
 								<div class="col-md-5">التقيؤ</div>
 							</div>
+							<?php
+							}
+							if(in_array('constipation', $gastrointestinal_prob))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Constipation</div>
 								<div class="col-md-2 text-center">
@@ -167,6 +180,11 @@
 								</div>
 								<div class="col-md-5">إمساك</div>
 							</div>
+							<?php
+							}
+							if(in_array('diarrhea', $gastrointestinal_prob))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Diarrhea</div>
 								<div class="col-md-2 text-center">
@@ -183,6 +201,10 @@
 								</div>
 								<div class="col-md-5">إسهال</div>
 							</div>
+							<?php
+							}
+							if(in_array('abdominal distention', $gastrointestinal_prob)){
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Abdominal distention</div>
 								<div class="col-md-2 text-center">
@@ -200,6 +222,12 @@
 								</div>
 								<div class="col-md-5">اانتفاخ في البطن</div>
 							</div>
+							<?php
+								}
+							}
+							if(!empty($pet_detail['stool_nature']))
+							{
+							?>
 							<br>
 							<div class="row">
 								<div class="col-md-6 text-center"> 
@@ -209,6 +237,10 @@
 									<strong><span>صف طبيعة البراز؟</span></strong>
 								</div>
 							</div>
+							<?php
+							if(in_array('solid', $stool_nature))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Solid</div>
 								<div class="col-md-2 text-center">
@@ -225,6 +257,11 @@
 								</div>
 								<div class="col-md-5">صلب</div>
 							</div>
+							<?php
+							}
+							if(in_array('semi solid', $stool_nature))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Semi Solid</div>
 								<div class="col-md-2 text-center">
@@ -241,6 +278,11 @@
 								</div>
 								<div class="col-md-5">شبه صلب</div>
 							</div>
+							<?php
+							}
+							if(in_array('loose', $stool_nature))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Loose (diarrhea)</div>
 								<div class="col-md-2 text-center">
@@ -257,6 +299,11 @@
 								</div>
 								<div class="col-md-5">فضفاض (الإسهال)</div>
 							</div>
+							<?php
+							}
+							if(in_array('pebbles like', $stool_nature))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Pebbles Like</div>
 								<div class="col-md-2 text-center">
@@ -273,6 +320,11 @@
 								</div>
 								<div class="col-md-5">مثل الحصى</div>
 							</div>
+							<?php
+							}
+							if(in_array('bloody', $stool_nature))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Bloody</div>
 								<div class="col-md-2 text-center">
@@ -289,6 +341,11 @@
 								</div>
 								<div class="col-md-5">دموي</div>
 							</div>
+							<?php
+							}
+							if(in_array('mocous', $stool_nature))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Mocous</div>
 								<div class="col-md-2 text-center">
@@ -305,6 +362,12 @@
 								</div>
 								<div class="col-md-5">مخاطي</div>
 							</div>
+							<?php
+							}
+							}
+							if(!empty($pet_detail['stool_color']))
+							{
+							?>
 							<br>
 							<div class="row">
 								<div class="col-md-6 text-center"> 
@@ -314,6 +377,10 @@
 									<strong><span>وصف لون البراز؟</span></strong>
 								</div>
 							</div>
+							<?php
+							if(in_array('yellow', $stool_color))
+							{
+							?> 
 							<div class="row">
 								<div class="col-md-5 text-center">Yellow</div>
 								<div class="col-md-2 text-center">
@@ -330,6 +397,11 @@
 								</div>
 								<div class="col-md-5">الأصفر</div>
 							</div>
+							<?php
+							}
+							if(in_array('green', $stool_color))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Green</div>
 								<div class="col-md-2 text-center">
@@ -346,6 +418,11 @@
 								</div>
 								<div class="col-md-5">أخضر</div>
 							</div>
+							<?php
+							}
+							if(in_array('brown', $stool_color))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Brown</div>
 								<div class="col-md-2 text-center">
@@ -362,6 +439,11 @@
 								</div>
 								<div class="col-md-5">بنى</div>
 							</div>
+							<?php
+							}
+							if(in_array('red', $stool_color))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Red</div>
 								<div class="col-md-2 text-center">
@@ -378,6 +460,11 @@
 								</div>
 								<div class="col-md-5">أحمر</div>
 							</div>
+							<?php
+							}
+							if(in_array('black', $stool_color))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Black</div>
 								<div class="col-md-2 text-center">
@@ -394,8 +481,16 @@
 								</div>
 								<div class="col-md-5">أسود</div>
 							</div>
+							<?php
+							}
+						}
+							?>
 						</div>
 						<div class="col-md-6">
+							<?php
+							if(!empty($pet_detail['urine_color']))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-6 text-center"> 
 									<strong><span>What is the color of urine</span></strong>
@@ -404,6 +499,10 @@
 									<strong><span>ما هو لون البول</span></strong>
 								</div>
 							</div>
+							<?php
+							if(in_array('light yellow', $urine_color))
+							{
+							?> 
 							<div class="row">
 								<div class="col-md-5 text-center">Light Yellow</div>
 								<div class="col-md-2 text-center">
@@ -420,6 +519,11 @@
 								</div>
 								<div class="col-md-5">أصفر فاتح</div>
 							</div>
+							<?php
+							}
+							if(in_array('dark yellow', $urine_color))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Dark Yellow</div>
 								<div class="col-md-2 text-center">
@@ -437,6 +541,11 @@
 								</div>
 								<div class="col-md-5">اصفر غامق</div>
 							</div>
+							<?php
+							}
+							if(in_array('red', $urine_color))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Red</div>
 								<div class="col-md-2 text-center">
@@ -454,6 +563,12 @@
 								</div>
 								<div class="col-md-5">أحمر</div>
 							</div>
+							<?php
+							}
+							}
+							if(!empty($pet_detail['eye_problems']))
+							{
+							?>
 							<br>
 							<div class="row">
 								<div class="col-md-6 text-center"> 
@@ -463,6 +578,10 @@
 									<strong><span>مشاكل العين؟</span></strong>
 								</div>
 							</div>
+							<?php
+							if(in_array('redness', $eye_problems))
+							{
+							?> 
 							<div class="row">
 								<div class="col-md-5 text-center">Redness</div>
 								<div class="col-md-2 text-center">
@@ -479,6 +598,11 @@
 								</div>
 								<div class="col-md-5">احمرار</div>
 							</div>
+							<?php
+							}
+							if(in_array('discharges', $eye_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Discharges</div>
 								<div class="col-md-2 text-center">
@@ -495,6 +619,11 @@
 								</div>
 								<div class="col-md-5">التفريغ</div>
 							</div>
+							<?php
+							}
+							if(in_array('itching', $eye_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Itching</div>
 								<div class="col-md-2 text-center">
@@ -511,6 +640,10 @@
 								</div>
 								<div class="col-md-5">مثير للحكة</div>
 							</div>
+							<?php
+							}
+						}
+							?>
 						</div>
 					</div>
 					<div class="row">
@@ -520,6 +653,10 @@
 					</div>
 					<div class="row">
 						<div class="col-md-6">
+							<?php
+							if(!empty($pet_detail['current_symptoms']))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-6 text-center"> 
 									<strong><span>The current symptoms that your pet suffering from</span></strong>
@@ -528,6 +665,10 @@
 									<strong><span>الأعراض الحالية التي يعاني منها حيوانك الأليف</span></strong>
 								</div>
 							</div>
+							<?php
+							if(in_array('fever', $current_symptoms))
+							{
+							?> 
 							<div class="row">
 								<div class="col-md-5 text-center">Fever</div>
 								<div class="col-md-2 text-center">
@@ -544,6 +685,10 @@
 								</div>
 								<div class="col-md-5">حمة</div>
 							</div>
+							<?php
+							}
+							if(in_array('thirst', $current_symptoms)){
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Thirst</div>
 								<div class="col-md-2 text-center">
@@ -560,6 +705,11 @@
 								</div>
 								<div class="col-md-5">العطش</div>
 							</div>
+							<?php
+							}
+							if(in_array('seizures', $current_symptoms))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Seizures</div>
 								<div class="col-md-2 text-center">
@@ -576,6 +726,11 @@
 								</div>
 								<div class="col-md-5">النوبات</div>
 							</div>
+							<?php
+							}
+							if(in_array('laziness', $current_symptoms))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Laziness</div>
 								<div class="col-md-2 text-center">
@@ -592,6 +747,11 @@
 								</div>
 								<div class="col-md-5">الكسل</div>
 							</div>
+							<?php
+							}
+							if(in_array('fainting', $current_symptoms))
+							{	
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Fainting</div>
 								<div class="col-md-2 text-center">
@@ -608,6 +768,11 @@
 								</div>
 								<div class="col-md-5">إغماء</div>
 							</div>
+							<?php
+							}
+							if(in_array('dermatology problems', $current_symptoms))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Dermatology Problems</div>
 								<div class="col-md-2 text-center">
@@ -624,6 +789,9 @@
 								</div>
 								<div class="col-md-5">مشاكل جلدية</div>
 							</div>
+							<?php
+							}
+							?>
 							<br>
 							<div class="row">
 								<div class="col-md-6 text-center"> 
@@ -633,6 +801,14 @@
 									<strong><span>مشاكل في الرئة؟</span></strong>
 								</div>
 							</div>
+							<?php
+							if(empty($pulmonary_problems[0]))
+							{
+								echo '<div class="row"><div class="col-md-6 text-center">No Selected</div></div>';
+							}
+							if(in_array('coughing', $pulmonary_problems))
+							{
+							?> 
 							<div class="row">
 								<div class="col-md-5 text-center">Coughing</div>
 								<div class="col-md-2 text-center">
@@ -649,6 +825,11 @@
 								</div>
 								<div class="col-md-5">يسعل</div>
 							</div>
+							<?php
+							}
+							if(in_array('difficulties_in_breathing', $pulmonary_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Difficulties in Breathing</div>
 								<div class="col-md-2 text-center">
@@ -665,6 +846,11 @@
 								</div>
 								<div class="col-md-5">صعوبات في التنفس</div>
 							</div>
+							<?php
+							}
+							if(in_array('sneezing', $pulmonary_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Sneezing</div>
 								<div class="col-md-2 text-center">
@@ -681,6 +867,11 @@
 								</div>
 								<div class="col-md-5">العطس</div>
 							</div>
+							<?php
+							}
+							if(in_array('loss_of_appetie', $pulmonary_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Loss of appetie</div>
 								<div class="col-md-2 text-center">
@@ -697,8 +888,16 @@
 								</div>
 								<div class="col-md-5">فقدان الشهية</div>
 							</div>
+							<?php
+							}
+						}
+							?>
 						</div>
 						<div class="col-md-6">
+							<?php
+							if(!empty($pet_detail['mouth_teeth_problems']))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-6 text-center"> 
 									<strong><span>Mouth And Teeth Problems?</span></strong>
@@ -707,6 +906,10 @@
 									<strong><span>مشاكل الفم والأسنان؟</span></strong>
 								</div>
 							</div>
+							<?php
+							if(in_array('bad smell', $mouth_teeth_problems))
+							{
+							?> 
 							<div class="row">
 								<div class="col-md-5 text-center">Bad Smell</div>
 								<div class="col-md-2 text-center">
@@ -723,6 +926,11 @@
 								</div>
 								<div class="col-md-5">رائحة كريهة</div>
 							</div>
+							<?php
+							}
+							if(in_array('ulcers', $mouth_teeth_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Ulcers</div>
 								<div class="col-md-2 text-center">
@@ -739,6 +947,11 @@
 								</div>
 								<div class="col-md-5">قرحة المعدة</div>
 							</div>
+							<?php
+							}
+							if(in_array('dryness', $mouth_teeth_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Dryness</div>
 								<div class="col-md-2 text-center">
@@ -755,6 +968,11 @@
 								</div>
 								<div class="col-md-5">جفاف</div>
 							</div>
+							<?php
+							}
+							if(in_array('gun redness', $mouth_teeth_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Gun Redness</div>
 								<div class="col-md-2 text-center">
@@ -771,6 +989,11 @@
 								</div>
 								<div class="col-md-5">احمرار البندقية</div>
 							</div>
+							<?php
+							}
+							if(in_array('change_color_teeth', $mouth_teeth_problems))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-5 text-center">Change The Color Of The Teeth</div>
 								<div class="col-md-2 text-center">
@@ -787,6 +1010,10 @@
 								</div>
 								<div class="col-md-5">علّق لون الأسنان</div>
 							</div>
+							<?php
+							}
+						}
+							?>
 						</div>
 					</div>
 					<div class="row">
@@ -795,14 +1022,18 @@
 								<div class="col-md-12">
 									<h4 class="text-center bg-primary text-white my-1">Medical Background</h4>
 								</div>
+							</div>
+							<?php 
+							if(!empty($pet_detail['med_bck_q1']))
+							{
+							?>
+							<div class="row">
 								<div class="col-md-6 text-center"> 
 									<strong><span>1. Has Your pet ever suffered from allergies or any adverse reactions?</span></strong>
 								</div>
 								<div class="col-md-6 text-center">
 									<strong><span>1. هل سبق أن عانى حيوانك الأليف من الحساسية أو أي ردود فعل سلبية؟</span></strong>
 								</div>
-							</div>
-							<div class="row">
 								<div class="col-md-5 text-center">Yes</div>
 								<div class="col-md-2 text-center">
 									<input class="text-center" type="radio" name="med_bck_q1" value="yes"
@@ -834,6 +1065,11 @@
 								</div>
 								<div class="col-md-5">لا</div>
 							</div>
+							<?php
+							}
+							if(!empty($pet_detail['med_bck_q2']))
+							{
+							?>
 							<br>
 							<div class="row">
 								<div class="col-md-6 text-center"> 
@@ -878,12 +1114,21 @@
 									<input class="form-control" type="text" name="med_bck_q2_specify" value="<?=$pet_detail['med_bck_q2_specify']?>">
 								</div>
 							</div>
+							<?php
+							}
+							?>
 						</div>
 						<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-12">
 									<h4 class="text-center bg-primary text-white my-1">Medicine And Vaccinations</h4>
 								</div>
+							</div>
+							<?php
+							if(!empty($pet_detail['med_and_vac_q1']))
+							{
+							?>
+							<div class="row">
 								<div class="col-md-12"> 
 									<span class="text-right">حدد متى كانت آخر مرة تم فيها تطعيم حيوانك الأليف؟</span>
 									<br>
@@ -894,6 +1139,11 @@
 								</div>
 							</div>
 							<br>
+							<?php
+							}
+							if(!empty($pet_detail['med_and_vac_q2']))
+							{
+							?>
 							<div class="row">
 								<div class="col-md-12"> 
 									<span class="text-right">حدد متى كانت آخر مرة قمت فيها بإزالة الديدان من حيوانك الأليف؟</span>
@@ -904,6 +1154,9 @@
 									<input class="form-control" type="text" name="med_and_vac_q2" value="<?=$pet_detail['med_and_vac_q2']?>">
 								</div>
 							</div>
+							<?php
+							}
+							?>
 						</div>
 					</div>
 					<div class="row">
@@ -913,6 +1166,10 @@
 					</div>
 					<div class="row">
 						<div class="col-md-6">
+							<?php
+							if(!empty($pet_detail['general_q1']))
+							{
+							?>
 							<div id="general_q1" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-12"> 
@@ -925,6 +1182,11 @@
 									</div>
 								</div>
 							</div>
+							<?php
+							}
+							if(!empty($pet_detail['general_q2']))
+							{
+							?>
 							<div id="general_q2" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-6 text-left"> 
@@ -967,6 +1229,11 @@
 									<div class="col-md-5">في الخارج</div>
 								</div>
 							</div>
+							<?php
+							}
+							if(!empty($pet_detail['general_q3']))
+							{
+							?>
 							<div id="general_q3" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-6 text-left"> 
@@ -1013,6 +1280,11 @@
 									</div>
 								</div>
 							</div>
+							<?php
+							}
+							if(!empty($pet_detail['general_q4']))
+							{
+							?>
 							<div id="general_q4" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-6 text-center"> 
@@ -1105,8 +1377,15 @@
 									<div class="col-md-5">بقايا الطعام</div>
 								</div>
 							</div>
+							<?php
+							}
+							?>
 						</div>
 						<div class="col-md-6">
+							<?php
+							if(!empty($pet_detail['general_q5']))
+							{
+							?>
 							<div id="general_q5" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-12"> 
@@ -1119,6 +1398,11 @@
 									</div>
 								</div>
 							</div>
+							<?php
+							}
+							if(!empty($pet_detail['general_q6']))
+							{
+							?>
 							<div id="general_q6" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-6 text-center"> 
@@ -1176,6 +1460,11 @@
 									</div>
 								</div>
 							</div>
+							<?php
+							}
+							if(!empty($pet_detail['general_q7']))
+							{
+							?>
 							<div id="general_q7" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-6 text-left"> 
@@ -1220,6 +1509,11 @@
 									<div class="col-md-5">لا</div>
 								</div>
 							</div>
+							<?php
+							}
+							if(!empty($pet_detail['general_q8']))
+							{
+							?>
 							<div id="general_q8" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-6 text-left"> 
@@ -1263,6 +1557,11 @@
 									<div class="col-md-5">لا</div>
 								</div>
 							</div>
+							<?php
+							}
+							if(!empty($pet_detail['general_q9']))
+							{
+							?>
 							<div id="general_q9" class="border rounded p-1">
 								<div class="row">
 									<div class="col-md-6 text-left"> 
@@ -1308,6 +1607,9 @@
 									</div>
 								</div>
 							</div>
+							<?php
+							}
+							?>
 						</div>
 					</div>
 					<?php
