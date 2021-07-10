@@ -27,7 +27,10 @@ class Pets extends CI_Controller{
 
     public function add()
     {
+        $data = $this->session->userdata();
+        $data['user_id'] = $data['user_details'][0]->users_id;
         $head['usernm'] = $this->session->userdata()->username;
+        // $data['usernm'] = "Salam";
         $head['title'] = 'Pets-add';
         $data['pets']=$this->pets->getPets()->result();
         $this->load->view('includes/header');
@@ -40,6 +43,7 @@ class Pets extends CI_Controller{
         $pet_name = $this->input->post('pet_name');
         // print_r($pet_name);exit;
         $pet_color = $this->input->post('pet_color');
+        $user_id = $this->input->post('user_id');
         $pet_breed = $this->input->post('pet_breed');
         $pet_type = $this->input->post('pet_type');
         $microchip_number = $this->input->post('microchip_number');
@@ -61,7 +65,7 @@ class Pets extends CI_Controller{
         } else {
             $pet_photo = array('image_metadata' => $this->upload->data('file_name'));
         }
-        $this->pets->addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo);
+        $this->pets->addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo,$user_id);
     }
 
     public function edit()

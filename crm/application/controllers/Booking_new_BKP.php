@@ -129,6 +129,8 @@ class Booking extends CI_Controller{
         $detail['general_q8']           = trim($_POST['general_q8']);
         $detail['general_q9']           = trim($_POST['general_q9']);
         $detail['general_q9_specify']   = trim($_POST['general_q9_specify']);
+        $detail['pet_id']               = $this->input->post('pet_id',true);
+        $detail['user_id']               = $this->input->post('user_id',true);
 
         return $this->booking->add_pet_detail($detail);
     }

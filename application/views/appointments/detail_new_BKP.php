@@ -18,7 +18,7 @@
 								<input type="text" class="form-control" name="blood_pressure" value="<?=$pet_detail['blood_pressure']?>">
 							</div>
 							<div class="col-md-6">
-								<input type="hidden" name="id" value="<?=$pet_detail['id']?>">
+								<input type="hidden" name="id" value="<?=$pet_detail['md_id']?>">
 								<input type="hidden" name="booking_id" value="<?=$pet_detail['booking_id']?>">
 								<label><strong>Temprature</strong></label>
 								<input type="radio" name="temp_type" value="celsius"
@@ -74,7 +74,12 @@
 				if(!empty($pet_detail))
 				{
 				?>
-				<strong>No. <?=$pet_detail['no']?></strong>
+				<strong>No. <?=$pet_detail['no']?></strong> <br>
+				<strong>Pet Name: <?=$pet_detail['pet_name']?></strong> <br>
+				<strong>Pet Color: <?=$pet_detail['color_title']?></strong> <br>
+				<strong>Pet Breed: <?=$pet_detail['breed_title']?></strong> <br>
+				<strong>Microchip no: <?=$pet_detail['microchip_number']?></strong> <br>
+				<strong>DOB: <?=$pet_detail['date_of_birth']?></strong>
 				<?php
 				}
 				?>

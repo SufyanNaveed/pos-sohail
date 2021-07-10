@@ -26,9 +26,6 @@
                         <th>#</th>
                         <th>Queue No</th>
                         <th><?php echo $this->lang->line('Pet Name') ?></th>
-                        <th><?php echo $this->lang->line('Customer Name') ?></th>             
-                        <th><?php echo $this->lang->line('Email') ?></th>
-                        <th><?php echo $this->lang->line('Type') ?></th>
                         <th><?php echo $this->lang->line('Pet Photo') ?></th>
                         <th><?php echo $this->lang->line('Color') ?></th>
                         <th><?php echo $this->lang->line('Microchip #') ?></th>
@@ -54,13 +51,10 @@
                         $pid   = $row->id;
                         //$total = $row->pet_color;
                     // if($pid==$booking->pet_id){
-                        echo "<tr>";
-                    echo "<td>$i</td>";
-                    echo "<td width='20%;'>$row->queue_no <a <button type='button' class='btn btn-success btn-sm' href='".base_url()."pets/detail/".$row->booking_id."'>Detail</button></a> <a <button type='button' class='btn btn-primary btn-sm' href='".base_url()."pos_invoices/create/".$row->booking_id."'>POS</button></a> </td>";
-                    echo "<td>$row->pet_name</td>";
-                    echo "<td>$row->name</td>";
-                    echo "<td>$row->email</td>
-                    <td>$row->user_type</td>
+                        echo "<tr>
+                    <td>$i</td>
+                    <td>$row->queue_no <a href='".base_url()."pets/detail/".$row->booking_id."'>Detail</a></td>
+                    <td>$row->pet_name</td>
                     <td><img class='round' src='".base_url()."userfiles/pet/". $row->pet_photo."' style='max-height: 100%;max-width: 100%'></td>
                     <td>$row->color</td>
                     <td>$row->microchip_number</td>
@@ -84,9 +78,6 @@
                         <th>#</th>
                         <th>Queue No</th>
                         <th><?php echo $this->lang->line('Pet Name') ?></th>
-                        <th><?php echo $this->lang->line('Customer Name') ?></th>
-                        <th><?php echo $this->lang->line('Email') ?></th>
-                        <th><?php echo $this->lang->line('Type') ?></th>
                         <th><?php echo $this->lang->line('Pet Photo') ?></th>
                         <th><?php echo $this->lang->line('Color') ?></th>
                         <th><?php echo $this->lang->line('Microchip #') ?></th>

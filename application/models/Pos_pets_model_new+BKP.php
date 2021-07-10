@@ -39,9 +39,10 @@ class Pos_pets_model extends CI_Model
             // print_r($this->input->get('id'));exit;
 
             $petId=$this->input->get('id');
-            $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+            $sql="SELECT u.name,u.email,u.user_type,p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
             c.title color, b.title pet_breed , t.title pet_type ,bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id
             from pos_pets p
+            left join users u on p.user_id =u.users_id
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_pet_breeds b on p.pet_breed=b.id
             join bookings bk on p.pet_id =bk.pet_id
@@ -53,6 +54,7 @@ class Pos_pets_model extends CI_Model
         }else{
             $roleId=$this->aauth->get_user()->roleid;
             $did=$this->aauth->get_user()->id;
+            // print_r($did); echo "1"; exit;
             // if($did = 6)
             // {
             //     $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
@@ -70,9 +72,13 @@ class Pos_pets_model extends CI_Model
 //  echo "<pre>";print_r($qr->result_array());exit;
 if($roleId == 6)
             {
+                // print_r($roleId);exit;
+            //     $did=$this->aauth->get_user()->id;
+            // print_r($did); exit;
                     // echo "yes";exit;
-            $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+            $sql=    "SELECT u.name,u.email,u.user_type,p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
             c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id from pos_pets p
+            left join users u on p.user_id =u.users_id
             join pos_pet_color c on p.pet_color =c.id
             join bookings bk on p.pet_id =bk.pet_id
             join pos_pet_breeds b on p.pet_breed=b.id
@@ -82,8 +88,9 @@ if($roleId == 6)
         }
     else if($roleId == 9)
     {
-                $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+                $sql=    "SELECT u.name,u.email,u.user_type,p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
                 c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id from pos_pets p
+                left join users u on p.user_id =u.users_id
                 join pos_pet_color c on p.pet_color =c.id
                 join bookings bk on p.pet_id =bk.pet_id
                 join pos_pet_breeds b on p.pet_breed=b.id
@@ -91,8 +98,9 @@ if($roleId == 6)
     }
     else{
                 // echo "yes";exit;
-                $sql=    "SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+                $sql=    "SELECT u.name,u.email,u.user_type,p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
                 c.title color, b.title pet_breed  , t.title pet_type, bk.queue_no,bk.on,bk.to,bk.from,bk.id as booking_id from pos_pets p
+                left join users u on p.user_id =u.users_id
                 join pos_pet_color c on p.pet_color =c.id
                 join bookings bk on p.pet_id =bk.pet_id
                 join pos_pet_breeds b on p.pet_breed=b.id
@@ -106,12 +114,27 @@ if($roleId == 6)
         return $result;
     }
 
-    public function getMedicalDetail($booking_id)
+    // public function getMedicalDetail($booking_id)
+    // {
+    //     $this->db->select('*');
+    //     $this->db->from('pos_pet_medical_detail');
+
+    //     $this->db->where('booking_id', $booking_id);
+    //     return $this->db->get()->row_array();
+    // }
+
+    function getMedicalDetail($booking_id = 0)
     {
         $this->db->select('*');
-        $this->db->from('pos_pet_medical_detail');
-        $this->db->where('booking_id', $booking_id);
-        return $this->db->get()->row_array();
+        $this->db->from('pos_pet_medical_detail');       
+        // $this->db->join('pos_pets','pos_pets.pet_id=pos_pet_medical_detail.pet_id','left');
+        // $this->db->join('users','pos_pets.user_id=users.users_id','left');
+        // $this->db->join('pos_pet_color','pos_pet_color.id=pos_pets.pet_color','left');
+        // $this->db->join('pos_pet_breeds','pos_pet_breeds.id=pos_pets.pet_breed','left');
+        if($booking_id > 0){
+            $this->db->where('pos_pet_medical_detail.booking_id', $booking_id);
+        }
+       return $this->db->get()->row_array();
     }
 
     public function getStagingStatus($booking_id)

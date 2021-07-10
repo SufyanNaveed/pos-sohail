@@ -12,9 +12,10 @@ class Crm_pets_model extends CI_Model
         // print_r($id);exit;
         if($this->input->get('id')!=null ){
             $petId=$this->input->get('id');
-            $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
-            c.title color, b.title pet_breed , t.title pet_type 
+            $sql="SELECT u.name,u.email, p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+            c.title color, b.title pet_breed , t.title pet_type
             from pos_pets p
+            left join users u on p.user_id =u.users_id
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_pet_breeds b on p.pet_breed=b.id
             left join pos_customer_pets pcp on p.pet_id=pcp.pet_id
@@ -24,9 +25,10 @@ class Crm_pets_model extends CI_Model
         }else{
             $customerId = $this->session->userdata('user_details')[0]->cid;
             // print_r($customerId);exit;
-            $sql="SELECT p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
+            $sql="SELECT u.name,u.email, p.pet_id id,p.pet_name,p.mark_difference ,p.date_of_birth,p.microchip_number ,p.pet_photo ,p.status ,
             c.title color, b.title pet_breed  , t.title pet_type 
             from pos_pets p
+            left join users u on p.user_id =u.users_id
             left join pos_pet_color c on p.pet_color =c.id
             left join pos_customer_pets pcp on p.pet_id=pcp.pet_id
             left join pos_pet_breeds b on p.pet_breed=b.id
@@ -39,7 +41,7 @@ class Crm_pets_model extends CI_Model
     }
 
 
-    public function addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo)
+    public function addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo,$user_id)
     {
         // echo "yes";exit;
         $this->db->insert('pos_pet_color', ['title'=>$pet_color]);
@@ -59,7 +61,8 @@ class Crm_pets_model extends CI_Model
             'pet_type' => $typeId,
             'mark_difference'=>$mark_difference,
             'date_of_birth'=>$date_of_birth,
-            'pet_photo'=>$pet_photo
+            'pet_photo'=>$pet_photo,
+            'user_id'=>$user_id,
             
         );
 

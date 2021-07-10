@@ -19,7 +19,7 @@
         $attributes = array('class' => 'card-body', 'id' => 'data_form');
         echo form_open_multipart('', $attributes);
         ?>
-        <h5>Add new Pet</h5>
+        <h5>Add new Pet <?php echo $usernm; ?></h5>
         <hr>
 
         <div class="form-group row">
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group row">
         <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
-
+        <input type="hidden" name="user_id" value="<?php echo $user_id;?>">
             <label class="col-sm-2 col-form-label"
                    for="accno">Pet color</label>
 

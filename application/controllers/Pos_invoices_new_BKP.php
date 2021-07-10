@@ -37,6 +37,7 @@ class Pos_invoices extends CI_Controller
     {
         parent::__construct();
         $this->load->model('pos_invoices_model', 'invocies');
+        $this->load->model('pos_pets_model', 'pets');
         $this->load->library("Aauth");
         $this->load->library("Registerlog");
         $this->load->library("Common");
@@ -84,6 +85,8 @@ class Pos_invoices extends CI_Controller
         $data['service_cat'] = $this->categories_model->service_category_list();
         $data['taxdetails'] = $this->common->taxdetail();
         $data['acc_list'] = $this->invocies->accountslist();
+        $booking_id = $this->uri->segment('3');
+        $data['pet_detail'] =$this->pets->getMedicalDetail($booking_id);
 
         $data['emp'] = $this->plugins->universal_api(69);
         if ($data['emp']['key1']) {

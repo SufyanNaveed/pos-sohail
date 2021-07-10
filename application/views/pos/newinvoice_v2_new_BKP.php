@@ -5,7 +5,7 @@
                 <a href='#' class="btn btn-primary  round " data-toggle="modal" data-target="#Pos_addCustomer">
                     <i class="fa fa-plus-circle"></i> <?php echo $this->lang->line('Add') ?>
                 </a>
-                <input type="text" class="form-control round mousetrap" name="cst" id="pos-customer-box" placeholder="<?php echo $this->lang->line('Enter Customer Name'); ?> " autocomplete="off" />
+              <input type="text" value="<?= !empty($pet_detail) ? $pet_detail['user_name'] : '' ?>" class="form-control round mousetrap" name="cst" id="pos-customer-box" placeholder="<?php echo $this->lang->line('Enter Customer Name'); ?> " autocomplete="off" />
             </div>
 
             <div class="row ml-3">
@@ -13,8 +13,28 @@
                 <div id="customer" class="col-md-12 ml-3">
                     <div class="clientinfo">
                         <input type="hidden" name="customer_id" id="customer_id" value="1">
-                        <div id="customer_name"><?php echo $this->lang->line('Default'); ?>: <strong>Walk
-                                In </strong></div>
+                        <div id="customer_name">
+                        <!-- <?php echo $this->lang->line('Default'); ?>: 
+                        <strong>Walk In </strong> !-->
+                
+                </div>
+                <div id="customer_information">
+                <?php
+                if(!empty($pet_detail))
+                {
+                ?>
+                <br> <strong>No. <?=$pet_detail['no']?></strong> <br>
+                <strong>Pet Name: <?=$pet_detail['pet_name']?></strong> <br>
+                <strong>Pet Color: <?=$pet_detail['color_title']?></strong> <br>
+                <strong>Pet Breed: <?=$pet_detail['breed_title']?></strong> <br>
+                <strong>Microchip no: <?=$pet_detail['microchip_number']?></strong> <br>
+                <strong>DOB: <?=$pet_detail['date_of_birth']?></strong> <br>
+                <strong>Customer Email: <?=$pet_detail['email']?></strong> <br>
+                <strong>Customer Email: <?=$pet_detail['user_name']?></strong> <br>
+                <?php
+                }
+                ?>
+                </div>
                     </div>
                 </div>
             </div>
