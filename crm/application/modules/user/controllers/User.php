@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed ');
 
+require_once FCPATH . 'application/third_party/qrcode/vendor/autoload.php';
+use Endroid\QrCode\QrCode;
+
+
+
 class User extends CI_Controller
 {
 
@@ -9,6 +14,7 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->model('User_model');
         $this->load->model('general_model', 'general');
+        $this->load->model('Crm_pets_model', 'pets');
 
         $this->captcha = $this->general->public_key()->captcha;
         $this->user_id = isset($this->session->get_userdata()['user_details'][0]->id) ? $this->session->get_userdata()['user_details'][0]->users_id : '1';
@@ -37,13 +43,8 @@ class User extends CI_Controller
      */
     public function login()
     {
-
-
         $data['captcha_on'] = $this->captcha;
         $data['captcha'] = $this->general->public_key()->recaptcha_p;
-
-
-
 
         if (isset($_SESSION['user_details'])) {
             redirect(base_url() . 'invoices', 'refresh');
@@ -52,6 +53,7 @@ class User extends CI_Controller
         $this->load->view('login', $data);
         $this->load->view('footer');
     }
+
     public function register()
     {
         $this->load->view('header');
@@ -99,6 +101,7 @@ class User extends CI_Controller
     //     }
 
     // }
+    
     public function registerCustomer()
     {
         $this->load->library('form_validation');
@@ -107,18 +110,25 @@ class User extends CI_Controller
         $validation = $this->form_validation;
 		$validation->set_rules('name', 'User Name', 'required|xss_clean|max_length[20]');
 		$validation->set_rules('email', 'User Email', 'required|xss_clean');
-		$validation->set_rules('region', 'User Region', 'required|xss_clean');
+		// $validation->set_rules('region', 'User Region', 'required|xss_clean');
 		$validation->set_rules('password', 'User Password', 'required|xss_clean');
-		$validation->set_rules('postbox', 'User Postbox', 'required|xss_clean');
+		// $validation->set_rules('postbox', 'User Postbox', 'required|xss_clean');
 		$validation->set_rules('phone', 'User phone', 'required|xss_clean');
         if ($validation->run() == FALSE) {
-			$this->session->set_flashdata('messagePr', 'All fields are required!');
-			redirect('User/register'); 
-
-		} 
+			$this->session->set_flashdata('messagePr', 'Email, Password and Phone are required!');
+			redirect('User/register'); 		
+        } 
         else{
+            
+            $pet_name = $this->input->post('pet_name');
+            $breed = $this->input->post('breed');
+            $pet_gender = $this->input->post('pet_gender');
+            $pet_image = $this->input->post('pet_image');
+
             $name = $this->input->post('name', true);
-            // print_r($name);exit;
+            $pet_name = $pet_name[0];
+            $pet_gender = $pet_gender[0];
+            $pet_breed = $breed[0];
             $company = $this->input->post('company', true);
             $phone = $this->input->post('phone', true);
             $email = $this->input->post('email', true);
@@ -143,16 +153,51 @@ class User extends CI_Controller
             $docid = $this->input->post('docid', true);
             $custom = $this->input->post('c_field', true);
             $discount = $this->input->post('discount', true);
-            $id = $this->User_model->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount);
-           if(!empty($id))
-           {
-            $this->session->set_flashdata('messagePr', 'Registered Successfully!!');
-			redirect('User/login'); 
-           }
-           else{
-            $this->session->set_flashdata('messagePr', 'Something Wrong!!');
-			redirect('User/login');
-           }
+
+            $id = $this->User_model->add($name,$pet_name,$pet_breed,$pet_gender, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount);
+
+            $pet_name = $this->input->post('pet_name');
+            $breed = $this->input->post('breed');
+            $pet_gender = $this->input->post('pet_gender');
+            $pet_image = $this->input->post('pet_image');
+            $counter = count($pet_name);
+            for($i=0; $i < $counter; $i++){
+                $pet_name = $pet_name[$i];
+                $pet_gender = $pet_gender[$i];
+                $pet_color = 'Null';
+                $pet_breed = $breed[$i];
+                $pet_type = 'Null';
+                $microchip_number = 'Null';
+                $mark_difference = 'Null';
+                $date_of_birth = 'Null';
+                $pet_photo = $pet_image[$i];
+
+                $config['upload_path'] = './userfiles/pet/';
+                $config['allowed_types'] = 'gif|jpg|png';
+                $config['max_size'] = 2000;
+                $config['max_width'] = 1500;
+                $config['max_height'] = 1500;
+
+                $this->load->library('upload', $config);
+
+                if (!$this->upload->do_upload('pet_photo')) {
+                    $error = array('error' => $this->upload->display_errors()); 
+                    // print_r($error);exit;    
+                } else {
+                    $pet_photo = array('image_metadata' => $this->upload->data('file_name'));
+                }
+                $this->pets->addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo, $id);
+            }
+
+            if(!empty($id))
+            {
+                $this->session->set_flashdata('messagePr', 'Registered Successfully!!');
+    			redirect('User/login'); 
+            }
+            else{
+                $this->session->set_flashdata('messagePr', 'Something Wrong!!');
+			    redirect('User/login');
+            }
         }
 
 
@@ -165,6 +210,7 @@ class User extends CI_Controller
     public function auth_user($page = '')
     {
 
+        $qrcode = $this->input->post('qrcode');
         if ($this->captcha) {
             $this->load->helper('recaptchalib_helper');
             $reCaptcha = new ReCaptcha($this->general->public_key()->recaptcha_s);
@@ -176,8 +222,14 @@ class User extends CI_Controller
             }
         }
 
+        if(isset($qrcode) && !empty($this->input->post('qrcode'))){
+            $return = $this->User_model->auth_qr_user($qrcode);            
+        }else{
+            $return = $this->User_model->auth_user();
+        }
 
-        $return = $this->User_model->auth_user();
+        //print_r($return);exit;
+
         if (empty($return)) {
             $this->session->set_flashdata('messagePr', 'Invalid details');
             redirect(base_url() . 'user/login', 'refresh');
@@ -364,6 +416,21 @@ class User extends CI_Controller
         if (!isset($id) || $id == '') {
             $id = $this->session->userdata('user_details')[0]->users_id;
         }
+        
+
+        $this->db->select('*');
+        $this->db->from('geopos_customers_qrcode');
+        $this->db->where('cus_id', $this->session->userdata('user_details')[0]->cid);
+        $query = $this->db->get();
+        $result = $query->row_array();
+                // print_r($result);exit;
+
+        $data['qrc'] = 'pos_' . date('Y_m_d_H_i_s') . '_.png';
+        $qrgen = base64_encode($result['qrcode']); 
+        $qrCode = new QrCode($qrgen);
+        $qrCode->writeFile(FCPATH . 'userfiles/pos_temp/' . $data['qrc']);
+
+
         $data['user_data'] = $this->User_model->get_users($id);
         $this->load->view('includes/header');
         $this->load->view('profile', $data);

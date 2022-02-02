@@ -30,6 +30,12 @@ use Mike42\Escpos\EscposImage;
 use Omnipay\Omnipay;
 use Endroid\QrCode\QrCode;
 
+use Salla\ZATCA\GenerateQrCode;
+use Salla\ZATCA\Tags\InvoiceDate;
+use Salla\ZATCA\Tags\InvoiceTaxAmount;
+use Salla\ZATCA\Tags\InvoiceTotalAmount;
+use Salla\ZATCA\Tags\Seller;
+use Salla\ZATCA\Tags\TaxNumber;
 
 class Pos_invoices extends CI_Controller
 {
@@ -186,8 +192,8 @@ class Pos_invoices extends CI_Controller
     //action
     public function action()
     {
-//        echo json_encode($_POST);
-//        exit();
+        //        echo json_encode($_POST);
+        //        exit();
         error_reporting(E_ALL ^ E_WARNING);
         $ptype = $this->input->post('type');
         $coupon = $this->input->post('coupon');
@@ -300,12 +306,12 @@ class Pos_invoices extends CI_Controller
                 $service_tax = $this->input->post('service_tax');
                 $service_discount = $this->input->post('service_discount');
                 $service_subtotal = $this->input->post('service_subtotal');
-// print_r($service_name);exit;
-if(!empty($service_id))
-{
+                // print_r($service_name);exit;
+                if(!empty($service_id))
+                {
 
-    // $total_discount_s = '';
-                foreach ($service_id as $key => $value) {
+                    $total_discount_s = '';
+                    foreach ($service_id as $key => $value) {
 
 
                     $total_discount_s += numberClean(@$service_discount[$key]);
@@ -315,7 +321,7 @@ if(!empty($service_id))
                         'tid' => $invocieno,
                         'sid' => $service_id[$key],
                         'product' => $service_name[$key],
-//                        'code' => $product_hsn[$key],
+                        //'code' => $product_hsn[$key],
                         'qty' => numberClean($service_qty[$key]),
                         'price' => rev_amountExchange_s($service_price[$key], $currency, $this->aauth->get_user()->loc),
                         'tax' => numberClean($service_tax[$key]),
@@ -336,9 +342,10 @@ if(!empty($service_id))
                     $itc_s += $amt_s;
                 }
             }
+
                 if ($serindex > 0) {
                     $this->db->insert_batch('geopos_invoice_items', $servicelist);
-                    $this->db->set(array('discount' => rev_amountExchange_s(amountFormat_general($total_discount), $currency, $this->aauth->get_user()->loc), 'tax' => rev_amountExchange_s(amountFormat_general($total_tax), $currency, $this->aauth->get_user()->loc), 'items' => $itc));
+                    $this->db->set(array('discount' => rev_amountExchange_s(amountFormat_general($total_discount), $currency, $this->aauth->get_user()->loc), 'tax' => rev_amountExchange_s(amountFormat_general($total_tax), $currency, $this->aauth->get_user()->loc), 'items' => $itc_s));
                     $this->db->where('id', $invocieno);
                     $this->db->update('geopos_invoices');
                 }
@@ -431,7 +438,7 @@ if(!empty($service_id))
                         $this->db->update('geopos_product_serials');
                     }
 
-                } else {
+                } else if( $prodindex <= 0 && $serindex <= 0){
                     echo json_encode(array('status' => 'Error', 'message' =>
                         "Please choose product from product list. Go to Item manager section if you have not added the products."));
                     $transok = false;
@@ -445,9 +452,12 @@ if(!empty($service_id))
                     $p_tid = 'thermal_p';
                     if ($printer['val2'] == 'server') $p_tid = 'thermal_server';
 
-                    echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice Success') . "         <a href='".base_url()."pos_invoices/create' class='btn btn-blue btn-lg'> Go Back </a>"));
-                    // echo json_encode(array('status' => 'Success', 'message' =>
-                    //     $this->lang->line('Invoice Success') . " <a target='_blank' href='thermal_pdf?id=$invocieno' class='btn btn-blue btn-lg'><span class='fa fa-ticket' aria-hidden='true'></span> PDF  </a> &nbsp; &nbsp;   <a id='$p_tid' data-ptid='$invocieno' data-url='" . $printer['val3'] . "'  class='btn btn-info btn-lg white'><span class='fa fa-ticket' aria-hidden='true'></span> " . $this->lang->line('Thermal Printer') . "  </a> &nbsp; &nbsp; <a target='_blank' href='printinvoice?id=$invocieno' class='btn btn-blue btn-lg'><span class='fa fa-print' aria-hidden='true'></span> A4  </a> &nbsp; &nbsp; <a href='view?id=$invocieno' class='btn btn-purple btn-lg'><span class='fa fa-eye' aria-hidden='true'></span> " . $this->lang->line('View') . "  </a> &nbsp; &nbsp; <a href='$link' class='btn btn-blue-grey btn-lg'><span class='fa fa-globe' aria-hidden='true'></span> " . $this->lang->line('Public View') . " </a> &nbsp;<a href='create' class='btn btn-flickr btn-lg'><span class='fa fa-plus-circle' aria-hidden='true'></span> " . $this->lang->line('Create') . "  </a>"));
+                    if($this->session->userdata('s_role') == 'r_6'){
+                        echo json_encode(array('status' => 'Success', 'message' => $this->lang->line('Invoice Success') . "         <a href='".base_url()."pos_invoices/create' class='btn btn-blue btn-lg'> Go Back </a>"));
+                    }else{
+                        echo json_encode(array('status' => 'Success', 'message' =>
+                        $this->lang->line('Invoice Success') . " <a target='_blank' href='thermal_pdf?id=$invocieno' class='btn btn-blue btn-lg'><span class='fa fa-ticket' aria-hidden='true'></span> PDF  </a> &nbsp; &nbsp;   <a id='$p_tid' data-ptid='$invocieno' data-url='" . $printer['val3'] . "'  class='btn btn-info btn-lg white'><span class='fa fa-ticket' aria-hidden='true'></span> " . $this->lang->line('Thermal Printer') . "  </a> &nbsp; &nbsp; <a target='_blank' href='printinvoice?id=$invocieno' class='btn btn-blue btn-lg'><span class='fa fa-print' aria-hidden='true'></span> A4  </a> &nbsp; &nbsp; <a href='view?id=$invocieno' class='btn btn-purple btn-lg'><span class='fa fa-eye' aria-hidden='true'></span> " . $this->lang->line('View') . "  </a> &nbsp; &nbsp; <a href='$link' class='btn btn-blue-grey btn-lg'><span class='fa fa-globe' aria-hidden='true'></span> " . $this->lang->line('Public View') . " </a> &nbsp;<a href='create' class='btn btn-flickr btn-lg'><span class='fa fa-plus-circle' aria-hidden='true'></span> " . $this->lang->line('Create') . "  </a>"));
+                    }
                 }
                 $this->load->model('billing_model', 'billing');
                 $tnote = '#' . $invocieno_n . '-' . $pmethod;
@@ -969,6 +979,19 @@ if(!empty($service_id))
         if ($data['invoice']['id']) $data['activity'] = $this->invocies->invoice_transactions($tid);
         $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1);
 
+        $data['qrc'] = 'pos_' . date('Y_m_d_H_i_s') . '_.png';
+        $loc = location($data['invoice']['loc']);
+        $generatedString = GenerateQrCode::fromArray([
+            new Seller($loc['cname']),   
+            new TaxNumber($loc['taxid']), 
+            new InvoiceDate(date("Y-m-d", strtotime($data['invoice']['invoicedate'])). ' ' . date('H:i:s')),
+            new InvoiceTotalAmount($data['invoice']['total']), 
+            new InvoiceTaxAmount($data['invoice']['tax'])
+        ])->toBase64();
+        
+        $qrCode = new QrCode($generatedString);
+        $qrCode->writeFile(FCPATH . 'userfiles/pos_temp/' . $data['qrc']);
+
         $this->load->library("Printer");
         $data['printer'] = $this->printer->check($data['invoice']['loc']);
 
@@ -996,6 +1019,20 @@ if(!empty($service_id))
         } else {
             $pref = $this->config->item('prefix');
         }
+
+        $data['qrc'] = 'pos_' . date('Y_m_d_H_i_s') . '_.png';
+        $loc = location($data['invoice']['loc']);
+        $generatedString = GenerateQrCode::fromArray([
+            new Seller($loc['cname']),   
+            new TaxNumber($loc['taxid']), 
+            new InvoiceDate(date("Y-m-d", strtotime($data['invoice']['invoicedate'])). ' ' . date('H:i:s')),
+            new InvoiceTotalAmount($data['invoice']['total']), 
+            new InvoiceTaxAmount($data['invoice']['tax'])
+        ])->toBase64();
+        
+        $qrCode = new QrCode($generatedString);
+        $qrCode->writeFile(FCPATH . 'userfiles/pos_temp/' . $data['qrc']);
+        
         $data['general'] = array('title' => $this->lang->line('Invoice'), 'person' => $this->lang->line('Customer'), 'prefix' => $pref, 't_type' => 0);
         ini_set('memory_limit', '64M');
         if ($data['invoice']['taxstatus'] == 'cgst' || $data['invoice']['taxstatus'] == 'igst') {
@@ -1621,11 +1658,19 @@ if(!empty($service_id))
         $online_pay = $this->billing->online_pay_settings();
         if ($online_pay['enable'] == 1) {
             $token = hash_hmac('ripemd160', $tid, $this->config->item('encryption_key'));
+            
             $data['qrc'] = 'pos_' . date('Y_m_d_H_i_s') . '_.png';
-            $qrCode = new QrCode(base_url('billing/view?id=' . $tid . '&itype=inv&token=' . $token));
-//header('Content-Type: '.$qrCode->getContentType());
-//echo $qrCode->writeString();
-            $qrCode->writeFile(FCPATH . 'userfiles/pos_temp/' . $data['qrc']);
+            $loc = location($data['invoice']['loc']);
+            $generatedString = GenerateQrCode::fromArray([
+                new Seller($loc['cname']),   
+                new TaxNumber($loc['taxid']), 
+                new InvoiceDate(date("Y-m-d", strtotime($data['invoice']['invoicedate'])). ' ' . date('H:i:s')),
+                new InvoiceTotalAmount($data['invoice']['total']), 
+                new InvoiceTaxAmount($data['invoice']['tax'])
+            ])->toBase64();
+
+            $qrCode = new QrCode($generatedString);
+            $qrCode->writeFile(FCPATH . 'userfiles/pos_temp/' . $data['qrc']); 
         }
         // boost the memory limit if it's low ;)
         ini_set('memory_limit', '64M');

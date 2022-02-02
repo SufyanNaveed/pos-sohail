@@ -876,8 +876,14 @@
         }
         ?>
         $('#b_total').html(' <?= $this->config->item('currency'); ?> ' + accounting.formatNumber(roundoff));
-        $('#p_amount').val(0);
-        $('#balance1').val(accounting.formatNumber(roundoff));
+        var s_role = '<?php echo $this->session->userdata('s_role'); ?>';
+        if(s_role == 'r_6'){
+            $('#p_amount').val(0);
+            $('#balance1').val(accounting.formatNumber(roundoff));
+        }else{            
+            $('#p_amount').val(accounting.formatNumber(roundoff));
+            $('#balance1').val(0);
+        }
     });
 
     function update_pay_pos() {

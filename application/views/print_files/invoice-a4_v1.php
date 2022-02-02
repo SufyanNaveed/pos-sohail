@@ -182,6 +182,7 @@
         <tr class="heading">
             <td> <?php echo $this->lang->line('Our Info') ?>:</td>
             <td><?= $general['person'] ?>:</td>
+            <td>QR Scan:</td>            
         </tr>
         </thead>
         <tbody>
@@ -212,6 +213,16 @@
                 }
                 ?>
                 </ul>
+            </td>
+            <td>                
+                <?php if (@$qrc AND $invoice['status'] != 'paid') {
+                    $this->pheight = $this->pheight + 40;
+                    ?>
+                    <img style="max-height:230px;" src='<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>' alt='QR'>
+                <?php } else { ?>
+                    <!-- echo '<div class="stamp">' . $this->lang->line(ucwords($invoice['status'])) . '</div>'; -->
+                    <img style="max-height:230px;" src='<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>' alt='QR'>
+                <?php } ?>         
             </td>
         </tr><?php if (@$invoice['name_s']) { ?>
             <tr>
@@ -392,7 +403,19 @@
 		</table><br><div class="sign">' . $this->lang->line('Authorized person') . '</div><div class="sign1"><img src="' . FCPATH . 'userfiles/employee_sign/' . $employee['sign'] . '" width="160" height="50" border="0" alt=""></div><div class="sign2">(' . $employee['name'] . ')</div><div class="terms">' . $invoice['notes'] . '<hr><strong>' . $this->lang->line('Terms') . ':</strong><br>';
 
     echo '<strong>' . $invoice['termtit'] . '</strong><br>' . $invoice['terms'];
-    ?></div>
+    ?>
+
+    <?php if (@$qrc AND $invoice['status'] != 'paid') {
+        $this->pheight = $this->pheight + 40;
+        ?>
+        <img style="max-height:200px;" src='<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>' alt='QR'>
+        <?php } else { ?>
+
+        <!-- echo '<div class="stamp">' . $this->lang->line(ucwords($invoice['status'])) . '</div>'; -->
+        <img style="max-height:200px;" src='<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>' alt='QR'>
+        
+    <?php } ?>
+</div>
 </div>
 </body>
 </html>

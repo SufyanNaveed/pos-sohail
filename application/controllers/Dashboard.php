@@ -40,6 +40,7 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
+        // print_r($this->session->userdata());exit;
         $today = date("Y-m-d");
         $month = date("m");
         $year = date("Y");

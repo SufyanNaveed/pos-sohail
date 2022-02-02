@@ -39,7 +39,7 @@ class Crm_pets_model extends CI_Model
     }
 
 
-    public function addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo)
+    public function addnew($pet_name, $pet_color, $pet_breed, $pet_type, $microchip_number, $mark_difference,$date_of_birth,$pet_photo,$customer_id=0)
     {
         // echo "yes";exit;
         $this->db->insert('pos_pet_color', ['title'=>$pet_color]);
@@ -68,7 +68,7 @@ class Crm_pets_model extends CI_Model
             $pet_id=$this->db->insert_id();
             $data=$this->session->userdata();
             // $customerId=$data['user_details'][0]->user_id;
-            $customerId = $this->session->userdata('user_details')[0]->cid;
+            $customerId = $customer_id > 0 ? $customer_id : $this->session->userdata('user_details')[0]->cid;
             $this->db->insert('pos_customer_pets', ['customer_id'=>$customerId,"pet_id"=>$pet_id]);
 
             echo json_encode(array('status' => 'Success', 'message' =>

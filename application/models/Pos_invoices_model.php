@@ -213,8 +213,15 @@ class Pos_invoices_model extends CI_Model
             $this->db->where('geopos_invoices.loc', $this->aauth->get_user()->loc);
         }
           elseif(!BDATA) { $this->db->where('geopos_invoices.loc', 0); }
-        $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
+        $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left'); 
 
+        if($this->aauth->get_user()->roleid == 10){
+            // $this->db->where('geopos_invoices.eid', $this->aauth->get_user()->id);
+            $this->db->join('geopos_invoice_items', 'geopos_invoice_items.tid = geopos_invoices.id', 'left'); 
+            $this->db->join('geopos_products', 'geopos_products.pid = geopos_invoice_items.pid', 'left');
+            $this->db->where('geopos_products.pcat',36);
+
+        }
         $i = 0;
 
         foreach ($this->column_search as $item) // loop column

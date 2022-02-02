@@ -185,8 +185,8 @@
         <thead>
         <tr class="heading">
             <td> <?php echo $this->lang->line('Our Info') ?>:</td>
-
             <td><?= $general['person'] ?>:</td>
+            <td>QR Scan:</td>            
         </tr>
         </thead>
         <tbody>
@@ -211,6 +211,11 @@
                     }
                 }
                 ?>
+            </td>
+            <td>                
+                <?php if (@$qrc){ ?>
+                    <img style="max-height:230px;" src='<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>' alt='QR'>
+                <?php } ?>         
             </td>
         </tr><?php if (@$invoice['name_s']) { ?>
 

@@ -996,3 +996,4 @@ $lang['Booking Date'] = "Booking Date";
 $lang['From'] = "From";
 $lang['To'] = "To";
 $lang['Receptionist'] = "Receptionist";
+$lang['Radiologist'] = "Radiologist";

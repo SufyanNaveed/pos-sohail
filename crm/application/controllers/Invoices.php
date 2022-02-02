@@ -32,9 +32,16 @@ class Invoices extends CI_Controller
     //invoices list
     public function index()
     {
+        $head['title'] = "Dashboard"; 
+        $this->load->view('index');
+        $this->load->view('includes/footer');
+    }
+
+    public function invoices()
+    {
         $head['title'] = "Manage Invoices";
         $this->load->view('includes/header');
-        $this->load->view('invoices/invoices');
+        $this->load->view('invoices/invoices'); 
         $this->load->view('includes/footer');
     }
 

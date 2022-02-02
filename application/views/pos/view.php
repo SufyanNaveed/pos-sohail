@@ -170,13 +170,13 @@
 
                 <!-- Invoice Company Details -->
                 <div id="invoice-company-details" class="row mt-2">
-                    <div class="col-md-6 col-sm-12 text-xs-center text-md-left"><p></p>
+                    <div class="col-md-4 col-sm-12 text-xs-center text-md-left"><p></p>
                         <img src="<?php $loc = location($invoice['loc']);
                         echo base_url('userfiles/company/' . $loc['logo']) ?>"
                              class="img-responsive p-1 m-b-2" style="max-height: 120px;">
                         <p class="ml-2"><?= $loc['cname'] ?></p>
                     </div>
-                    <div class="col-md-6 col-sm-12 text-xs-center text-md-right">
+                    <div class="col-md-4 col-sm-12 text-xs-center text-md-right">
                         <h2><?php echo $this->lang->line('INVOICE') ?></h2>
                         <p class="pb-1"> <?php echo prefix(7) . ' ' . $invoice['tid'] . '</p>
                             <p class="pb-1">' . $this->lang->line('Reference') . ':' . $invoice['refer'] . '</p>'; ?>
@@ -184,6 +184,15 @@
                             <li><?php echo $this->lang->line('Gross Amount') ?></li>
                             <li class="lead text-bold-800"><?php echo amountExchange($invoice['total'], 0, $this->aauth->get_user()->loc) ?></li>
                         </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-12 text-xs-center text-md-right">
+                        <?php if (@$qrc AND $invoice['status'] != 'paid') {
+                            $this->pheight = $this->pheight + 40;
+                            ?>
+                            <img style="max-height:230px;" src='<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>' alt='QR'>
+                            <?php } else { ?>
+                            <img style="max-height:230px;" src='<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>' alt='QR'>
+                        <?php } ?>
                     </div>
                 </div>
                 <!--/ Invoice Company Details -->

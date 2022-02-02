@@ -132,9 +132,9 @@
             <li class="nav-item <?php if ($this->uri->segment(1) == "invoices") {
                 echo 'active';
             } ?>">
-                <a href="<?php echo base_url(); ?>invoices/"> <i class="icon-file-text"></i><span class="menu-title"> <?php echo $this->lang->line('Invoices'); ?> </span></a>
+                <a href="<?php echo base_url(); ?>invoices/invoices"> <i class="icon-file-text"></i><span class="menu-title"> <?php echo $this->lang->line('Invoices'); ?> </span></a>
             </li>
-            <li class="nav-item <?php if ($this->uri->segment(1) == "rec_invoices") {
+            <!-- <li class="nav-item <?php if ($this->uri->segment(1) == "rec_invoices") {
                 echo 'active';
             } ?>">
                 <a href="<?php echo base_url(); ?>subscriptions/"> <i class="icon-android-calendar"></i><span class="menu-title"> <?php echo $this->lang->line('Subscriptions'); ?> </span></a>
@@ -159,7 +159,7 @@
             <li class="nav-item <?php if($this->uri->segment(1) == "projects") echo "active"; ?>">
                 <a href="<?php echo base_url("projects"); ?>"><i class="icon-stack"></i>
                     <span><?php echo $this->lang->line('Project'); ?></span></a>
-            </li>
+            </li> -->
             <li class="nav-item <?php if ($this->uri->segment(2) == "profile") {
                 echo 'active';
             } ?>">
@@ -175,11 +175,11 @@
             } ?>">
                 <a href="<?php echo base_url(); ?>pets"> <i class="icon-paw"></i><span class="menu-title">  Pet  </span></a>
             </li>
-            <li class="nav-item <?php if ($this->uri->segment(1) == "address") {
+            <!-- <li class="nav-item <?php if ($this->uri->segment(1) == "address") {
                 echo 'active';
             } ?>">
                 <a href="<?php echo base_url(); ?>user/address"> <i class="icon-address-book"></i><span class="menu-title"> <?php echo $this->lang->line('Address') ?> </span></a>
-            </li>
+            </li> -->
 
 
         </ul>

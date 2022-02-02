@@ -59,6 +59,9 @@ function user_role($id = 5)
 {
     $ci =& get_instance();
     switch ($id) {
+        case 10:
+            return $ci->lang->line('Radiologist');
+            break;
         case 9:
             return $ci->lang->line('Receptionist');
             break;

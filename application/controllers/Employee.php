@@ -634,6 +634,7 @@ class Employee extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Employee Permissions';
         $data['permission'] = $this->employee->employee_permissions();
+        // echo '<pre>'; print_r($data);exit;
         $this->load->view('fixed/header', $head);
         $this->load->view('employee/permissions', $data);
         $this->load->view('fixed/footer');
@@ -658,6 +659,8 @@ class Employee extends CI_Controller
             $name6 = 'r_' . $i . '_6';
             $name7 = 'r_' . $i . '_7';
             $name8 = 'r_' . $i . '_8';
+            $name9 = 'r_' . $i . '_9';
+            $name10 = 'r_' . $i . '_10';
             $val1 = 0;
             $val2 = 0;
             $val3 = 0;
@@ -666,6 +669,8 @@ class Employee extends CI_Controller
             $val6 = 0;
             $val7 = 0;
             $val8 = 0;
+            $val9 = 0;
+            $val10 = 0;
             if ($this->input->post($name1)) $val1 = 1;
             if ($this->input->post($name2)) $val2 = 1;
             if ($this->input->post($name3)) $val3 = 1;
@@ -673,8 +678,11 @@ class Employee extends CI_Controller
             if ($this->input->post($name5)) $val5 = 1;
             if ($this->input->post($name6)) $val6 = 1;
             if ($this->input->post($name7)) $val7 = 1;
-            if ($this->aauth->get_user()->roleid == 5 && $i == 9) $val5 = 1;
-            $data = array('r_1' => $val1, 'r_2' => $val2, 'r_3' => $val3, 'r_4' => $val4, 'r_5' => $val5, 'r_6' => $val6, 'r_7' => $val7);
+            if ($this->input->post($name8)) $val8 = 1;
+            if ($this->input->post($name9)) $val9 = 1;
+            if ($this->input->post($name10)) $val10 = 1;
+            // if ($this->aauth->get_user()->roleid == 5 && $i == 9  && $i == 10) $val5 = 1;
+            $data = array('r_1' => $val1, 'r_2' => $val2, 'r_3' => $val3, 'r_4' => $val4, 'r_5' => $val5, 'r_6' => $val6, 'r_7' => $val7, 'r_8' => $val8, 'r_9' => $val9, 'r_10' => $val10);
             $this->db->set($data);
             $this->db->where('id', $i);
             $this->db->update('geopos_premissions');

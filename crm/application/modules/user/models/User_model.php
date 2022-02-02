@@ -32,6 +32,32 @@ class User_model extends CI_Model
         }
     }
 
+    public function auth_qr_user($qrcode)
+    {
+        $qrcode = base64_decode($qrcode);
+        $this->db->select('*');
+        $this->db->join('geopos_customers', 'geopos_customers.id = geopos_customers_qrcode.cus_id','left');
+        $this->db->where('geopos_customers_qrcode.qrcode',$qrcode);
+        $query = $this->db->get('geopos_customers_qrcode')->row_array();
+        
+        $email = $query['email'];
+        $password = $query['password'];
+        $this->db->where("is_deleted='0' AND (email='$email')");
+        $result = $this->db->get('users')->result();
+        if (!empty($result)) {
+            if (password_verify($password, $result[0]->password)) {
+                if ($result[0]->status != 'active') {
+                    return 'not_varified';
+                }
+                return $result;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     /**
      * This function is used to delete user
      * @param: $id - id of user table
@@ -88,7 +114,7 @@ class User_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
-    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0)
+    public function add($name,$pet_name,$breed,$pet_gender, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0)
     {
         $this->db->select('email');
         $this->db->from('geopos_customers');
@@ -110,9 +136,13 @@ class User_model extends CI_Model
 
             $data = array(
                 'name' => $name,
+                'pet_name' => $pet_name,
+                'breed' => $breed,
+                'pet_gender' => $pet_gender,
                 'company' => $company,
                 'phone' => $phone,
                 'email' => $email,
+                'password' => $password,
                 'address' => $address,
                 'city' => $city,
                 'region' => $region,
@@ -141,6 +171,14 @@ class User_model extends CI_Model
             // print_r($data);exit;
             if ($this->db->insert('geopos_customers', $data)) {
                 $cid = $this->db->insert_id();
+
+                $qrdata = array(
+                    'cus_id' => $cid,
+                    'qrcode' => mt_rand()
+                );          
+                // print_r($qrdata);exit;
+                $this->db->insert('geopos_customers_qrcode', $qrdata);
+        
                 // print_r($cid);exit;
                 // echo $cid;exit; 
                 $p_string = '';
@@ -166,7 +204,6 @@ class User_model extends CI_Model
                         'lang' => 'english'
                     );
                     // print_r($data);exit;
-// print_r($data);exit;
                     $this->db->insert('users', $data);
                     $p_string = ' Temporary Password is ' . $temp_password . ' ';
                 // }
@@ -188,7 +225,7 @@ class User_model extends CI_Model
                 //     $attachment = '';
                 //     $this->communication_model->send_corn_email($email, $name, $auto_mail['subject'], $auto_mail['message'], $attachmenttrue, $attachment);
                 // }
-                return true;
+                return $cid;
 
             } else {
                 echo json_encode(array('status' => 'Error', 'message' =>
@@ -300,6 +337,5 @@ class User_model extends CI_Model
         $result = $this->db->get()->row_array();
         return $result;
     }
-
 
 }

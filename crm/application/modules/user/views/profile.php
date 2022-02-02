@@ -38,6 +38,16 @@
                                         <input type="hidden" name="fileOld"
                                                value="<?php echo isset($user_data[0]->profile_pic) ? $user_data[0]->profile_pic : ''; ?>"/>
                                     </div>
+                                    <div style="border: solid 1px black; margin-top: 30px; padding: 0 0 20px 0;">
+                                        <?php if (@$qrc) {?>
+                                            <small>
+                                                <?php echo $this->lang->line('Scan & Pay') ?>
+                                            </small>
+                                            <a class="btn btn-sm btn-success" href="<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>" role="button" aria-pressed="true" target="_blank">QR Download</a> 
+                                            <div class="text-center">
+                                                <img style="max-height:200px;" src='<?php echo base_url('userfiles/pos_temp/' . $qrc) ?>' alt='QR'></div>
+                                       <?php } ?>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <h4>Personal Information:</h4>

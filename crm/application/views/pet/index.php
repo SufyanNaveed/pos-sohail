@@ -36,7 +36,7 @@
                         echo "<tr>
                     <td>$i</td>
                     <td>$row->pet_name</td>
-                    <td><img class='round' src='".$row->pet_photo."userfiles/pet/". $row->pet_photo."' style='max-height: 100%;max-width: 100%'></td>
+                    <td><img class='round' src='".base_url("userfiles/pet/". $row->pet_photo)."' style='max-height: 100%;max-width: 100%'></td>
                     <td>$row->color</td>
                     <td>$row->microchip_number</td>
                     <td>$row->date_of_birth</td>

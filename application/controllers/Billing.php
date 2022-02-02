@@ -18,15 +18,24 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 require_once APPPATH . 'third_party/vendor/autoload.php';
-
+require_once FCPATH . 'application/third_party/qrcode/vendor/autoload.php';
 
 use Omnipay\Omnipay;
+use Endroid\QrCode\QrCode;
+
 use PayPal\Api\Amount;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Api\PaymentExecution;
+
+use Salla\ZATCA\GenerateQrCode;
+use Salla\ZATCA\Tags\InvoiceDate;
+use Salla\ZATCA\Tags\InvoiceTaxAmount;
+use Salla\ZATCA\Tags\InvoiceTotalAmount;
+use Salla\ZATCA\Tags\Seller;
+use Salla\ZATCA\Tags\TaxNumber;
 
 class Billing extends CI_Controller
 {
@@ -70,6 +79,20 @@ class Billing extends CI_Controller
             if (CUSTOM) $data['c_custom_fields'] = $this->custom->view_fields_data($data['invoice']['cid'], 1, 1);
             $data['gateway'] = $this->billing->gateway_list('Yes');
 
+            $data['qrc'] = 'pos_' . date('Y_m_d_H_i_s') . '_.png';
+            // $qrCode = new QrCode('id=' . $tid . '\ntype=inv\ntoken=' . $token);
+            $loc = location($data['invoice']['loc']);
+
+                $generatedString = GenerateQrCode::fromArray([
+                new Seller($loc['cname']),   
+                new TaxNumber($loc['taxid']), 
+                new InvoiceDate(date("Y-m-d", strtotime($data['invoice']['invoicedate'])). ' ' . date('H:i:s')),
+                new InvoiceTotalAmount($data['invoice']['total']), 
+                new InvoiceTaxAmount($data['invoice']['tax'])
+            ])->toBase64();
+
+            $qrCode = new QrCode($generatedString);
+            $qrCode->writeFile(FCPATH . 'userfiles/pos_temp/' . $data['qrc']);
 
             $data['employee'] = $this->invocies->employee($data['invoice']['eid']);
 
@@ -218,6 +241,20 @@ class Billing extends CI_Controller
             } else {
                 $pref = $this->config->item('prefix');
             }
+            
+            $data['qrc'] = 'pos_' . date('Y_m_d_H_i_s') . '_.png';
+            $loc = location($data['invoice']['loc']);
+            $generatedString = GenerateQrCode::fromArray([
+                new Seller($loc['cname']),   
+                new TaxNumber($loc['taxid']), 
+                new InvoiceDate(date("Y-m-d", strtotime($data['invoice']['invoicedate'])). ' ' . date('H:i:s')),
+                new InvoiceTotalAmount($data['invoice']['total']), 
+                new InvoiceTaxAmount($data['invoice']['tax'])
+            ])->toBase64();
+            
+            $qrCode = new QrCode($generatedString);
+            $qrCode->writeFile(FCPATH . 'userfiles/pos_temp/' . $data['qrc']);
+
             $data['general'] = array('title' => $this->lang->line('Invoice'), 'person' => $this->lang->line('Customer'), 'prefix' => $pref, 't_type' => 0);
             ini_set('memory_limit', '64M');
             if ($data['invoice']['taxstatus'] == 'cgst' || $data['invoice']['taxstatus'] == 'igst') {
